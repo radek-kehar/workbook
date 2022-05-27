@@ -1,9 +1,15 @@
-import {BinaryOperation, Example, Operator, Unknown} from "./examples";
+import {BinaryOperation, ComparisonOperation, Example} from "./examples";
 
 export interface GeneratorOptions {
-    type: Operator,
+    type: Operation,
     range: NumericRange,
     unknowns: Unknown[]
+}
+
+export enum Operation {
+    COMPARE,
+    ADD,
+    SUB
 }
 
 export interface NumericRange {
@@ -11,11 +17,17 @@ export interface NumericRange {
     maxDigit: number
 }
 
+export enum Unknown {
+    OPERAND,
+    OPERATOR,
+    RESULT
+}
+
 export interface GenericGenerator<T extends any> {
     next(): T;
 }
 
-export interface OperationGenerator extends GenericGenerator<BinaryOperation> {
+export interface OperationGenerator<T extends BinaryOperation | ComparisonOperation> extends GenericGenerator<T> {
 }
 
 export interface UnknownGenerator extends GenericGenerator<Unknown> {
@@ -25,7 +37,7 @@ export interface ExampleGenerator extends GenericGenerator<Example> {
 }
 
 export interface Generators {
-    operationGenerator: OperationGenerator,
+    operationGenerator: OperationGenerator<BinaryOperation | ComparisonOperation>,
     unknownGenerator: UnknownGenerator,
     options: GeneratorOptions
 }

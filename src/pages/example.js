@@ -1,6 +1,7 @@
 import {createGenerator} from "../lib/generator/examples";
-import {Operator, Unknown} from "../model/examples";
+import {Operator} from "../model/examples";
 import Example from "../components/example/Example";
+import {Unknown} from "../model/generator";
 
 export default function ExamplePage() {
     const options = [

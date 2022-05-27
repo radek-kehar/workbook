@@ -57,7 +57,7 @@ const createGetter = (state: Examples): ExamplesGetter => {
  UTILS
  */
 
-const isUnknown = (valueExample: BinaryExample | ValueExample): ValueExample => {
+const isUnknown = (valueExample: BinaryExample | ValueExample<any>): ValueExample<any> => {
     if ('isUnknown' in valueExample) {
         if (valueExample.isUnknown) {
             return valueExample;
@@ -69,7 +69,7 @@ const isUnknown = (valueExample: BinaryExample | ValueExample): ValueExample => 
     }
 }
 
-const findUnknown = (example: BinaryExample): ValueExample => {
+const findUnknown = (example: BinaryExample): ValueExample<any> => {
     const left = isUnknown(example.left);
     if (left !== null) return left;
     const right = isUnknown(example.right);
@@ -94,11 +94,11 @@ const nextExample = (draft: Examples, action: NextExampleAction) => {
     draft.examples[draft.actual] = action.payload;
 }
 
-const evaluateEntered = (unknown: ValueExample, enteredValue: number): number => {
+const evaluateEntered = (unknown: ValueExample<any>, enteredValue: number): number => {
     return unknown.entered ? Number(`${unknown.entered}${enteredValue}`) : enteredValue;
 }
 
-const removeEntered = (unknown: ValueExample): number => {
+const removeEntered = (unknown: ValueExample<any>): number => {
     if (unknown.entered !== null) {
         const entered = unknown.entered.toString().slice(0, -1);
         return entered.length > 0 ? Number(entered) : null;
@@ -106,7 +106,7 @@ const removeEntered = (unknown: ValueExample): number => {
     return null;
 }
 
-const evaluateAnswer = (unknown: ValueExample): Answer => {
+const evaluateAnswer = (unknown: ValueExample<any>): Answer => {
     return (unknown.value === unknown.entered) ? Answer.CORRECT : Answer.WRONG;
 }
 

@@ -1,13 +1,30 @@
-import {GeneratorOptions, NumericRange} from "../../../model/generator";
+import {GeneratorOptions, NumericRange, Operation} from "../../../model/generator";
 import {CommandKey, Keyboard, KeyboardKey, KeyboardType, KeyType, SymbolKey} from "../../../model/examples";
 
 export const createKeyboard = (options: GeneratorOptions): Keyboard => {
-    const range = options.range;
-    const numberOfKeys = range.maxDigit - range.minDigit;
-    if (numberOfKeys <= 10 && range.maxDigit <= 20) {
-        return createKeyboardWithAutoEnter(range);
-    } else {
-        return createKeyboardWithConfirmByEnter();
+    switch (options.type) {
+        case Operation.COMPARE:
+            return {
+                type: KeyboardType.AUTO_ENTER,
+                keys: {
+                    numeric: [],
+                    symbol: createSymbolKeys(SymbolKey.GREATER_THAN, SymbolKey.EQUALS, SymbolKey.COMMA),
+                    command: []
+                }
+            }
+
+        case Operation.ADD:
+        case Operation.SUB:
+            const range = options.range;
+            const numberOfKeys = range.maxDigit - range.minDigit;
+            if (numberOfKeys <= 10 && range.maxDigit <= 20) {
+                return createKeyboardWithAutoEnter(range);
+            } else {
+                return createKeyboardWithConfirmByEnter();
+            }
+
+        default:
+            throw new Error();
     }
 }
 

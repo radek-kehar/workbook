@@ -1,22 +1,23 @@
-import {BinaryOperation, Operator} from "../../model/examples";
+import {BinaryOperation, ComparisonOperation, Operator} from "../../model/examples";
 import {genericGenerator} from "./commons";
-import {GeneratorOptions, GenericGenerator, NumericRange, OperationGenerator} from "../../model/generator";
+import {GeneratorOptions, GenericGenerator, NumericRange, Operation, OperationGenerator} from "../../model/generator";
 
-export const createGenerator = (options: GeneratorOptions): OperationGenerator => {
+export const createGenerator = (options: GeneratorOptions): OperationGenerator<BinaryOperation | ComparisonOperation> => {
     switch (options.type) {
-        case Operator.ADD:
+        case Operation.COMPARE:
+            return generator(comparisonOperationFactory(options.range));
+        case Operation.ADD:
             return generator(binaryOperationAddFactory(options.range));
-            break;
-        case Operator.SUB:
+        case Operation.SUB:
             return generator(binaryOperationSubFactory(options.range));
         default:
             throw new Error();
     }
 }
 
-const generator = (valuesFactory: () => BinaryOperation[]): OperationGenerator => {
-    const generator: GenericGenerator<BinaryOperation> = genericGenerator(valuesFactory);
-    const next = (): BinaryOperation => {
+const generator = <T extends BinaryOperation | ComparisonOperation> (factory: () => T[]): OperationGenerator<T> => {
+    const generator: GenericGenerator<T> = genericGenerator(factory);
+    const next = (): T => {
         return generator.next();
     }
     return {
@@ -24,13 +25,41 @@ const generator = (valuesFactory: () => BinaryOperation[]): OperationGenerator =
     };
 }
 
-const operationFactory = (left: number, right: number, operator: Operator): BinaryOperation => {
-    const result = operator.fce(left, right)
-    return {
-        operator,
-        left,
-        right,
-        result
+const comparisonOperationFactory = ({minDigit, maxDigit}: NumericRange): () => ComparisonOperation[] => {
+    const valuesFactory = (): ComparisonOperation[] => {
+        const result: ComparisonOperation[] = [];
+        for (let i = minDigit; i <= maxDigit; i++) {
+            for (let j = minDigit; j <= maxDigit; j++) {
+                const temp = i - j;
+                result.push({
+                    operator: temp > 0 ? Operator.GREATER_THAN : (temp < 0 ? Operator.LESS_THAN : Operator.EQUALS),
+                    left: i,
+                    right: j
+                })
+            }
+        }
+        return result;
+    }
+    return valuesFactory;
+}
+
+class OperationFactory {
+    static readonly ADD  = new OperationFactory(Operator.ADD, (l: number, r: number): number => l + r);
+    static readonly SUB = new OperationFactory(Operator.SUB, (l: number, r: number): number => l - r);
+
+    // private to disallow creating other instances of this type
+    private constructor(
+        private readonly operator: Operator,
+        private readonly fce: (l: number, r: number) => number) {
+    }
+
+    create(left: number, right: number): BinaryOperation {
+        return {
+            operator: this.operator,
+            left,
+            right,
+            result: this.fce(left, right)
+        }
     }
 }
 
@@ -44,9 +73,9 @@ const binaryOperationAddFactory = ({minDigit, maxDigit}: NumericRange): () => Bi
         for (let i = minDigit; i <= maxDigit; i++) {
             for (let j = offset; j <= maxDigit; j++) {
                 if ((i + j) <= maxDigit) {
-                    result.push(operationFactory(i, j, Operator.ADD));
+                    result.push(OperationFactory.ADD.create(i, j));
                     if (i !== j) {
-                        result.push(operationFactory(j, i, Operator.ADD));
+                        result.push(OperationFactory.ADD.create(j, i));
                     }
                 } else {
                     break;
@@ -68,7 +97,7 @@ const binaryOperationSubFactory = ({minDigit, maxDigit}: NumericRange): () => Bi
         for (let i = maxDigit; i >= minDigit; i--) {
             for (let j = 0; j <= maxDigit; j++) {
                 if ((i - j) >= minDigit) {
-                    result.push(operationFactory(i, j, Operator.SUB));
+                    result.push(OperationFactory.SUB.create(i, j));
                 } else {
                     break;
                 }

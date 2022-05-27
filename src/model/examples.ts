@@ -5,9 +5,35 @@ export interface Examples {
 }
 
 export interface Example {
-    example: BinaryExample,
+    example: BinaryExample | ComparisonExample,
     keyboard: Keyboard,
     answer: Answer
+}
+
+export interface BinaryExample {
+    operator: ValueExample<Operator>,
+    left: BinaryExample | ValueExample<number>,
+    right: BinaryExample | ValueExample<number>,
+    result: ValueExample<number>
+}
+
+export interface ComparisonExample {
+    operator: ValueExample<Operator>,
+    left: number,
+    right: number
+}
+
+export interface ValueExample<T> {
+    value: T,
+    entered?: T,
+    isUnknown: boolean,
+    show: ShowValue
+}
+
+export enum ShowValue {
+    NONE,
+    VALUE,
+    ENTERED
 }
 
 export interface BinaryOperation {
@@ -17,45 +43,14 @@ export interface BinaryOperation {
     result: number
 }
 
-export interface BinaryExample {
+export interface ComparisonOperation {
     operator: Operator,
-    left: BinaryExample | ValueExample,
-    right: BinaryExample | ValueExample,
-    result: ValueExample
-}
-export enum ShowValue {
-    NONE,
-    VALUE,
-    ENTERED
+    left: number,
+    right: number
 }
 
-export interface ValueExample {
-    value: number,
-    entered?: number,
-    isUnknown: boolean,
-    show: ShowValue
-}
-
-export class Operator {
-    static readonly ADD  = new Operator('ADD', '+', (l: number, r: number) => l + r);
-    static readonly SUB = new Operator('SUB', '-',(l: number, r: number) => l - r);
-
-    // private to disallow creating other instances of this type
-    private constructor(
-        private readonly key: string,
-        public readonly symbol: string,
-        public readonly fce: (l: number, r: number) => number) {
-    }
-
-    toString() {
-        return this.key;
-    }
-}
-
-export enum Unknown {
-    OPERAND,
-    OPERATOR,
-    RESULT
+export enum Operator {
+    EQUALS, GREATER_THAN, LESS_THAN, ADD, SUB
 }
 
 export interface Keyboard {
@@ -77,8 +72,7 @@ export enum SymbolKey {
 }
 
 export enum CommandKey {
-    ENTER,
-    BACKSPACE
+    ENTER, BACKSPACE
 }
 
 export enum KeyType {
