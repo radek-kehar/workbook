@@ -67,6 +67,7 @@ const SymbolKeyboard = ({keys, click}) => {
             {iconKeyFactory(keys, click, SymbolKey.EQUALS)}
             {iconKeyFactory(keys, click, SymbolKey.LESS_THAN)}
             {iconKeyFactory(keys, click, SymbolKey.MINUS)}
+            {iconKeyFactory(keys, click, SymbolKey.PLUS)}
             {iconKeyFactory(keys, click, SymbolKey.COMMA)}
         </>
     )

@@ -1,12 +1,12 @@
 import {BinaryOperation, ComparisonOperation, Example} from "./examples";
 
 export interface GeneratorOptions {
-    type: Operation,
+    type: OperationType,
     range: NumericRange,
     unknowns: Unknown[]
 }
 
-export enum Operation {
+export enum OperationType {
     COMPARE,
     ADD,
     SUB
@@ -33,7 +33,7 @@ export interface OperationGenerator<T extends BinaryOperation | ComparisonOperat
 export interface UnknownGenerator extends GenericGenerator<Unknown> {
 }
 
-export interface ExampleGenerator extends GenericGenerator<Example> {
+export interface ExampleGenerator extends GenericGenerator<Example<any>> {
 }
 
 export interface Generators {

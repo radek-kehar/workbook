@@ -22,7 +22,7 @@ export const IconKey = ({value, click}) => {
     }
 
     return (
-        <button type="button" onClick={handleOnClick}>
+        <button type="button" disabled={value.disabled} onClick={handleOnClick}>
             <IconLabel type={value.type} value={value.value}/>
         </button>
     )

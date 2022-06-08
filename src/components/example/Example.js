@@ -1,17 +1,14 @@
 import {useEffect, useRef} from "react";
 import {initExampleAction, keyPressedAction, nextExampleAction, useExamples} from "../../state/examples";
-import Keyboard from "../keyboard/Keyboard";
 import {Answer} from "../../model/examples";
-import Operation from "../operation/Operation";
+import BinaryExample from "./BinaryExample";
+import {OperationType} from "../../model/generator";
+import ComparisonExample from "./ComparisonExample";
 
 function Example({generator, count}) {
     const [getter, dispatch] = useExamples(count)
 
     const timer = useRef(null)
-
-    const handleOnClick = (value) => {
-        dispatch(keyPressedAction(value))
-    }
 
     useEffect(() => {
         dispatch(initExampleAction(generator.next()))
@@ -34,14 +31,29 @@ function Example({generator, count}) {
     const example = getter.getExample()
 
     if (example === null) {
-        return null
+        return null // todo: zobrazeni chyby
+    }
+
+    const handleOnKeyPressed = (value) => {
+        dispatch(keyPressedAction(value))
+    }
+
+    const chooseExampleComponent = (example) => {
+        switch (example.type) {
+            case OperationType.COMPARE:
+                return <ComparisonExample example={example} keyPressed={handleOnKeyPressed}/>
+            case OperationType.ADD:
+            case OperationType.SUB:
+                return <BinaryExample example={example} keyPressed={handleOnKeyPressed}/>
+            default:
+                return null // todo: zobrazeni chyby
+        }
     }
 
     return (
         <div className="App">
             {/*<ProgressBar max={10} value={5}/>*/}
-            <Operation operation={example.example}/>
-            {<Keyboard value={example.keyboard} click={handleOnClick}/>}
+            {chooseExampleComponent(example)}
         </div>
     );
 }

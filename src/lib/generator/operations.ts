@@ -1,14 +1,14 @@
 import {BinaryOperation, ComparisonOperation, Operator} from "../../model/examples";
 import {genericGenerator} from "./commons";
-import {GeneratorOptions, GenericGenerator, NumericRange, Operation, OperationGenerator} from "../../model/generator";
+import {GeneratorOptions, GenericGenerator, NumericRange, OperationType, OperationGenerator} from "../../model/generator";
 
 export const createGenerator = (options: GeneratorOptions): OperationGenerator<BinaryOperation | ComparisonOperation> => {
     switch (options.type) {
-        case Operation.COMPARE:
+        case OperationType.COMPARE:
             return generator(comparisonOperationFactory(options.range));
-        case Operation.ADD:
+        case OperationType.ADD:
             return generator(binaryOperationAddFactory(options.range));
-        case Operation.SUB:
+        case OperationType.SUB:
             return generator(binaryOperationSubFactory(options.range));
         default:
             throw new Error();

@@ -6,17 +6,18 @@ import {createKeyboard} from "./creator/keyboard";
 import {transformOperationToExample} from "./mapper/operationToExample";
 import {genericGenerator} from "./commons";
 
-export const createGenerator = (options: GeneratorOptions[]): ExampleGenerator => {
+export const createExampleGenerator = (options: GeneratorOptions[]): ExampleGenerator => {
     const generatorOfGenerators = createGeneratorOfGenerators(options);
 
-    const next = (): Example => {
+    const next = (): Example<any> => {
         const generator = generatorOfGenerators.next();
         const operation = generator.operationGenerator.next();
         const unknown = generator.unknownGenerator.next();
         const example = transformOperationToExample(generator.options, operation, unknown);
         const keyboard = createKeyboard(generator.options);
         return {
-            example,
+            type: generator.options.type,
+            operation: example,
             keyboard,
             answer: Answer.NOT_ANSWERED
         };

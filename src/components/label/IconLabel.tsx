@@ -25,6 +25,9 @@ const IconDef: Record<Icon, IconName> = {
 }
 
 const OperatorIconDef: Record<string, Icon> = {
+    [Operator.EQUALS.toString()]: Icon.EQUALS,
+    [Operator.GREATER_THAN.toString()]: Icon.GREATER_THAN,
+    [Operator.LESS_THAN.toString()]: Icon.LESS_THAN,
     [Operator.ADD.toString()]: Icon.PLUS,
     [Operator.SUB.toString()]: Icon.MINUS,
 }
@@ -34,6 +37,7 @@ const SymbolKeyIconDef: Record<SymbolKey, Icon> = {
     [SymbolKey.GREATER_THAN]: Icon.GREATER_THAN,
     [SymbolKey.LESS_THAN]: Icon.LESS_THAN,
     [SymbolKey.MINUS]: Icon.MINUS,
+    [SymbolKey.PLUS]: Icon.PLUS,
     [SymbolKey.COMMA]: Icon.MINUS // todo: dosadit spravnou ikonu
 }
 

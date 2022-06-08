@@ -1,35 +1,38 @@
 import {
+    Answer,
     BinaryExample,
     BinaryOperation,
     ComparisonExample,
-    ComparisonOperation, Operator,
+    ComparisonOperation,
+    Operator,
     ShowValue,
-    ValueExample
+    Value
 } from "../../../model/examples";
-import {GeneratorOptions, Operation, Unknown} from "../../../model/generator";
+import {GeneratorOptions, OperationType, Unknown} from "../../../model/generator";
 import {getRandomInt} from "../commons";
 
 export const transformOperationToExample = (options: GeneratorOptions, operation: ComparisonOperation | BinaryOperation, unknown: Unknown): ComparisonExample | BinaryExample  => {
     switch (options.type) {
-        case Operation.COMPARE:
+        case OperationType.COMPARE:
             return transformComparisonOperationToExample(operation as ComparisonOperation);
 
-        case Operation.ADD:
-        case Operation.SUB:
+        case OperationType.ADD:
+        case OperationType.SUB:
             const example = transformBinaryOperationToExample(operation as BinaryOperation);
-            let unknownValue: ValueExample<number>;
+            let unknownValue: Value<number>;
             if (unknown === Unknown.OPERAND) {
-                const exampleValues: ValueExample<number>[] = fillBinaryOperands(example,[]);
+                const exampleValues: Value<number>[] = fillBinaryOperands(example,[]);
                 const random = getRandomInt(0, exampleValues.length - 1);
                 unknownValue = exampleValues[random];
             } else if (unknown === Unknown.OPERATOR) {
-                const exampleValues: ValueExample<Operator>[] = fillBinaryOperators(example,[]);
+                const exampleValues: Value<Operator>[] = fillBinaryOperators(example,[]);
                 const random = getRandomInt(0, exampleValues.length - 1);
                 unknownValue = exampleValues[random];
             } else { // unknown === Unknown.RESULT
                 unknownValue = example.result;
             }
             unknownValue.isUnknown = true;
+            unknownValue.type = unknown;
             unknownValue.show = ShowValue.NONE;
             return example;
 
@@ -42,16 +45,23 @@ export const transformComparisonOperationToExample = (operation: ComparisonOpera
     return {
         operator: {
             value: operation.operator,
+            isUnknown: true,
+            type: Unknown.OPERATOR,
             entered: null,
-            isUnknown: false,
-            show: ShowValue.VALUE
+            show: ShowValue.NONE
         },
-        left: operation.left,
-        right: operation.right
+        left: {
+            value: operation.left,
+            isUnknown: false
+        },
+        right: {
+            value: operation.right,
+            isUnknown: false
+        }
     }
 }
 
-const fillBinaryOperands = (example: BinaryExample, exampleValues: ValueExample<number>[]): ValueExample<number>[] => {
+const fillBinaryOperands = (example: BinaryExample, exampleValues: Value<number>[]): Value<number>[] => {
     if ('isUnknown' in example.left) {
         exampleValues.push(example.left);
     } else {
@@ -65,7 +75,7 @@ const fillBinaryOperands = (example: BinaryExample, exampleValues: ValueExample<
     return exampleValues;
 }
 
-const fillBinaryOperators = (example: BinaryExample, exampleValues: ValueExample<Operator>[]): ValueExample<Operator>[] => {
+const fillBinaryOperators = (example: BinaryExample, exampleValues: Value<Operator>[]): Value<Operator>[] => {
     if (!('isUnknown' in example.left)) {
         return fillBinaryOperators(example.left, exampleValues);
     }
@@ -79,20 +89,16 @@ const fillBinaryOperators = (example: BinaryExample, exampleValues: ValueExample
 }
 
 export const transformBinaryOperationToExample = (operation: BinaryOperation): BinaryExample => {
-    const left: BinaryExample | ValueExample<number> = transformOperand(operation.left);
-    const right: BinaryExample | ValueExample<number> = transformOperand(operation.right);
-    const result: ValueExample<number> = {
+    const left: BinaryExample | Value<number> = transformOperand(operation.left);
+    const right: BinaryExample | Value<number> = transformOperand(operation.right);
+    const result: Value<number> = {
         value: operation.result,
-        entered: null,
-        isUnknown: false,
-        show: ShowValue.VALUE
+        isUnknown: false
     }
     return {
         operator: {
             value: operation.operator,
-            entered: null,
-            isUnknown: false,
-            show: ShowValue.VALUE
+            isUnknown: false
         },
         left,
         right,
@@ -100,16 +106,14 @@ export const transformBinaryOperationToExample = (operation: BinaryOperation): B
     }
 }
 
-const transformOperand = (value: BinaryOperation | number): BinaryExample | ValueExample<number> => {
+const transformOperand = (value: BinaryOperation | number): BinaryExample | Value<number> => {
     if (typeof value === 'object') {
         return transformBinaryOperationToExample(value);
 
     } else {
         const result = {
             value,
-            entered: null,
-            isUnknown: false,
-            show: ShowValue.VALUE
+            isUnknown: false
         };
         return result;
     }

@@ -1,33 +1,37 @@
+import {OperationType, Unknown} from "./generator";
 
 export interface Examples {
     actual: number,
-    examples: Example[]
+    examples: Example<any>[]
 }
 
-export interface Example {
-    example: BinaryExample | ComparisonExample,
+export interface Example<T extends BinaryExample | ComparisonExample> {
+    type: OperationType,
+    operation: T,
     keyboard: Keyboard,
     answer: Answer
 }
 
 export interface BinaryExample {
-    operator: ValueExample<Operator>,
-    left: BinaryExample | ValueExample<number>,
-    right: BinaryExample | ValueExample<number>,
-    result: ValueExample<number>
+    operator: Value<Operator>,
+    left: BinaryExample | Value<number>,
+    right: BinaryExample | Value<number>,
+    result: Value<number>
 }
 
 export interface ComparisonExample {
-    operator: ValueExample<Operator>,
-    left: number,
-    right: number
+    operator: Value<Operator>,
+    left: Value<number>,
+    right: Value<number>
 }
 
-export interface ValueExample<T> {
+export interface Value<T extends number | Operator> {
     value: T,
-    entered?: T,
     isUnknown: boolean,
-    show: ShowValue
+    type?: Unknown,
+    entered?: T,
+    show?: ShowValue,
+    answer?: Answer
 }
 
 export enum ShowValue {
@@ -68,7 +72,7 @@ export enum KeyboardType {
 }
 
 export enum SymbolKey {
-    EQUALS, GREATER_THAN, LESS_THAN, MINUS, COMMA
+    EQUALS, GREATER_THAN, LESS_THAN, PLUS, MINUS, COMMA
 }
 
 export enum CommandKey {

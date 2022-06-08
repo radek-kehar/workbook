@@ -1,26 +1,38 @@
-import {GeneratorOptions, NumericRange, Operation} from "../../../model/generator";
+import {GeneratorOptions, NumericRange, OperationType, Unknown} from "../../../model/generator";
 import {CommandKey, Keyboard, KeyboardKey, KeyboardType, KeyType, SymbolKey} from "../../../model/examples";
 
 export const createKeyboard = (options: GeneratorOptions): Keyboard => {
     switch (options.type) {
-        case Operation.COMPARE:
+        case OperationType.COMPARE:
             return {
                 type: KeyboardType.AUTO_ENTER,
                 keys: {
                     numeric: [],
-                    symbol: createSymbolKeys(SymbolKey.GREATER_THAN, SymbolKey.EQUALS, SymbolKey.COMMA),
+                    symbol: createSymbolKeys(SymbolKey.GREATER_THAN, SymbolKey.EQUALS, SymbolKey.LESS_THAN),
                     command: []
                 }
             }
 
-        case Operation.ADD:
-        case Operation.SUB:
-            const range = options.range;
-            const numberOfKeys = range.maxDigit - range.minDigit;
-            if (numberOfKeys <= 10 && range.maxDigit <= 20) {
-                return createKeyboardWithAutoEnter(range);
+        case OperationType.ADD:
+        case OperationType.SUB:
+            if (options.unknowns.find(item => item === Unknown.OPERATOR)) {
+                return {
+                    type: KeyboardType.AUTO_ENTER,
+                    keys: {
+                        numeric: [],
+                        symbol: createSymbolKeys(SymbolKey.PLUS, SymbolKey.MINUS),
+                        command: []
+                    }
+                }
+
             } else {
-                return createKeyboardWithConfirmByEnter();
+                const range = options.range;
+                const numberOfKeys = range.maxDigit - range.minDigit;
+                if (numberOfKeys <= 10 && range.maxDigit <= 20) {
+                    return createKeyboardWithAutoEnter(range);
+                } else {
+                    return createKeyboardWithConfirmByEnter();
+                }
             }
 
         default:

@@ -1,4 +1,5 @@
 import {ShowValue} from "../../model/examples";
+import {IconLabel} from "./IconLabel";
 
 const NumericLabel = ({value}) => {
     return (
@@ -8,12 +9,26 @@ const NumericLabel = ({value}) => {
 
 const UnknownLabel = () => {
     return (
-        <span>_</span>
+        <span>?</span>
     )
 }
 
-export default function Label({value}) {
-    return value.isUnknown && value.show === ShowValue.NONE
+export const OperandLabel = ({value}) => {
+    const label = value.isUnknown && value.show === ShowValue.NONE
         ? <UnknownLabel/>
-        : <NumericLabel value={value.show === ShowValue.ENTERED ? value.entered : value.value}/>
+        : <NumericLabel value={value.show === ShowValue.ENTERED ? value.entered : value.value}/>;
+
+    return (
+        label
+    )
+}
+
+export const OperatorLabel = ({value}) => {
+    const label = value.isUnknown && value.show === ShowValue.NONE
+        ? <UnknownLabel/>
+        : <IconLabel type={'operator'} value={value.value}/>;
+
+    return (
+        label
+    )
 }
