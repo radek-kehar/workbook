@@ -1,11 +1,11 @@
 import React from "react";
-import {CheckBoxDef, CheckBoxModel} from "../../model/form";
+import {CheckBoxDef, CheckBoxModel} from "@model/form";
 
-export type CheckBoxProps<T> = {
+type CheckBoxProps<T> = {
     onChange: (event: CheckBoxModel<T>) => void
 } & CheckBoxDef & CheckBoxModel<T>;
 
-export const CheckBox = <T extends any>({ label, name, value, onChange }: CheckBoxProps<T>) => {
+const CheckBox = <T extends any>({ label, name, value, onChange }: CheckBoxProps<T>) => {
 
     const handleChange = () => {
         onChange({
@@ -21,3 +21,4 @@ export const CheckBox = <T extends any>({ label, name, value, onChange }: CheckB
         </label>
     );
 };
+export default CheckBox;

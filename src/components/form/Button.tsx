@@ -1,6 +1,12 @@
 import React from "react";
 
-const Button = ({ type, text, click }) => {
+export type ButtonProps = {
+    type: 'button',
+    text: string,
+    click: () => void
+};
+
+const Button = ({ type, text, click }: ButtonProps) => {
 
     return (
         <button type={type} onClick={click}>

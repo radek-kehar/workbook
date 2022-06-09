@@ -8,6 +8,7 @@ import {ExerciseContext, ExerciseDispatchContext} from "./ExerciseProvider";
 import {saveExercise} from "../../lib/store/exercise";
 import {operationTypeInfos, unknownInfos} from "../../message/enums";
 import { useNavigate } from "react-router-dom";
+import {CheckBox} from "../form/CheckBox";
 
 const NumericRange = ({value, onChange}) => {
 
@@ -67,6 +68,7 @@ const ExerciseForm = () => {
             <form>
                 <CheckBoxGroup value={operations} onChange={(value) => handleChange(setOperationAction, value)}/>
                 <NumericRange value={state.range} onChange={(value) => handleChange(setRangeAction, value)}/>
+                {/*<CheckBox label='Přes 10' name='overbase' value={state.overbase} onChange={handleChange}/>*/}
                 <CheckBoxGroup value={unknowns} onChange={(value) => handleChange(setUnknownAction, value)}/>
                 <Button type='button' text='Reset' click={handleReset}/>
                 <Button type='button' text='Spusť' click={handleStart}/>
