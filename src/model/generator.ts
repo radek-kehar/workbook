@@ -1,4 +1,4 @@
-import {BinaryOperation, ComparisonOperation, Example} from "./examples";
+import {BinaryOperation, ComparisonOperation, Example} from "model/examples";
 
 export interface GeneratorOptions {
     type: OperationType,

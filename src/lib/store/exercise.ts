@@ -1,4 +1,4 @@
-import {ExerciseOptions} from "../../model/exercise";
+import {ExerciseOptions} from "model/exercise";
 
 const STORAGE_KEY = 'exercise.options'
 

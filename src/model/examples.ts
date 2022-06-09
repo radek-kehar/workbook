@@ -1,4 +1,4 @@
-import {OperationType, Unknown} from "./generator";
+import {OperationType, Unknown} from "model/generator";
 
 export interface Examples {
     actual: number,

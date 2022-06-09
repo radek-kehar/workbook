@@ -1,4 +1,4 @@
-import {GenericGenerator} from "../../model/generator";
+import {GenericGenerator} from "model/generator";
 
 class UniqueRandom<T extends any> {
     readonly valuesFactory: () => T[];

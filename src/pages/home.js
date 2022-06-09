@@ -1,6 +1,5 @@
 import React from 'react';
-import Exercise from "../components/exercise/Exercise";
-import ExerciseForm from "../components/exercise/ExerciseForm";
+import ExerciseForm from "components/exercise/ExerciseForm";
 
 const Home = () => {
     return (

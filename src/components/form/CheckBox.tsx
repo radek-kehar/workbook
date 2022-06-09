@@ -1,5 +1,5 @@
 import React from "react";
-import {CheckBoxDef, CheckBoxModel} from "../../model/form";
+import {CheckBoxDef, CheckBoxModel} from "model/form";
 
 type CheckBoxProps<T> = {
     onChange: (event: CheckBoxModel<T>) => void

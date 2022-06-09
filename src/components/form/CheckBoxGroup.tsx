@@ -1,6 +1,6 @@
 import CheckBox from "./CheckBox";
 import React from "react";
-import {CheckBoxDef, CheckBoxModel} from "../../model/form";
+import {CheckBoxDef, CheckBoxModel} from "model/form";
 
 type CheckboxGroupProps<T> = {
     value: (CheckBoxDef & CheckBoxModel<T>)[],

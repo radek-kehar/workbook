@@ -1,14 +1,13 @@
 import React, {useContext} from "react";
-import InputNumber from "../form/InputNumber";
-import CheckBoxGroup from "../form/CheckBoxGroup";
-import Button from "../form/Button";
-import {OperationType, Unknown} from "../../model/generator";
-import {resetAction, setOperationAction, setRangeAction, setUnknownAction} from "../../state/exercise";
-import {ExerciseContext, ExerciseDispatchContext} from "./ExerciseProvider";
-import {saveExercise} from "../../lib/store/exercise";
-import {operationTypeInfos, unknownInfos} from "../../message/enums";
+import InputNumber from "components/form/InputNumber";
+import CheckBoxGroup from "components/form/CheckBoxGroup";
+import Button from "components/form/Button";
+import {OperationType, Unknown} from "model/generator";
+import {resetAction, setOperationAction, setRangeAction, setUnknownAction} from "state/exercise";
+import {ExerciseContext, ExerciseDispatchContext} from "components/exercise/ExerciseProvider";
+import {saveExercise} from "lib/store/exercise";
+import {operationTypeInfos, unknownInfos} from "message/enums";
 import { useNavigate } from "react-router-dom";
-import {CheckBox} from "../form/CheckBox";
 
 const NumericRange = ({value, onChange}) => {
 

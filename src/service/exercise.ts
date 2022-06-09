@@ -1,5 +1,5 @@
-import {ExerciseOptions} from "../model/exercise";
-import {GeneratorOptions, OperationType} from "../model/generator";
+import {ExerciseOptions} from "model/exercise";
+import {GeneratorOptions, OperationType} from "model/generator";
 
 export const generateOptions = (exercise: ExerciseOptions): GeneratorOptions[] => {
     const options: GeneratorOptions[] = [];

@@ -1,5 +1,5 @@
-import {IconKey, NumericKey} from "./KeyKeyboard";
-import {CommandKey, SymbolKey} from "../../model/examples";
+import {IconKey, NumericKey} from "components/keyboard/KeyKeyboard";
+import {CommandKey, SymbolKey} from "model/examples";
 
 /**
  key = pocet cisel na klavesnici

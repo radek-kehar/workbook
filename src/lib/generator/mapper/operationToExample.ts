@@ -7,9 +7,9 @@ import {
     Operator,
     ShowValue,
     Value
-} from "../../../model/examples";
-import {GeneratorOptions, OperationType, Unknown} from "../../../model/generator";
-import {getRandomInt} from "../commons";
+} from "model/examples";
+import {GeneratorOptions, OperationType, Unknown} from "model/generator";
+import {getRandomInt} from "lib/generator/commons";
 
 export const transformOperationToExample = (options: GeneratorOptions, operation: ComparisonOperation | BinaryOperation, unknown: Unknown): ComparisonExample | BinaryExample  => {
     switch (options.type) {

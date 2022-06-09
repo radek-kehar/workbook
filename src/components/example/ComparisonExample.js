@@ -1,6 +1,6 @@
-import Keyboard from "../keyboard/Keyboard";
-import {OperandLabel, OperatorLabel} from "../label/Label";
-import {Answer} from "../../model/examples";
+import Keyboard from "components/keyboard/Keyboard";
+import {OperandLabel, OperatorLabel} from "components/label/Label";
+import {Answer} from "model/examples";
 
 const ComparisonExample = ({example, keyPressed}) => {
     const operation = example.operation;

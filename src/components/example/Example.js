@@ -1,9 +1,9 @@
 import {useEffect, useRef} from "react";
 import {initExampleAction, keyPressedAction, nextExampleAction, useExamples} from "../../state/examples";
-import {Answer} from "../../model/examples";
-import BinaryExample from "./BinaryExample";
-import {OperationType} from "../../model/generator";
-import ComparisonExample from "./ComparisonExample";
+import {Answer} from "model/examples";
+import BinaryExample from "components/example/BinaryExample";
+import {OperationType} from "model/generator";
+import ComparisonExample from "components/example/ComparisonExample";
 
 function Example({generator, count}) {
     const [getter, dispatch] = useExamples(count)

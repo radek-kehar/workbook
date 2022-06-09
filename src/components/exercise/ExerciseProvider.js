@@ -1,4 +1,4 @@
-import {useExercises} from "../../state/exercise";
+import {useExercises} from "state/exercise";
 import {createContext} from "react";
 
 export const ExerciseContext = createContext(null);

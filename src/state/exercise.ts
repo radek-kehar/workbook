@@ -1,9 +1,9 @@
 import {NumericRange, OperationType, Unknown} from "../model/generator";
 import {Reducer, useImmerReducer} from "use-immer";
 import {Dispatch} from "react";
-import {ExerciseOptions} from "../model/exercise";
-import {CheckBoxModel} from "../model/form";
-import {loadExercise} from "../lib/store/exercise";
+import {ExerciseOptions} from "model/exercise";
+import {CheckBoxModel} from "model/form";
+import {loadExercise} from "lib/store/exercise";
 
 //region STATE
 const emptyState = (): ExerciseOptions => {

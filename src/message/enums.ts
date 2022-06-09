@@ -1,4 +1,4 @@
-import {OperationType, Unknown} from "../model/generator";
+import {OperationType, Unknown} from "model/generator";
 
 export interface OperationTypeInfo {
     label: string;

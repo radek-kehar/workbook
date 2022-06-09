@@ -1,6 +1,6 @@
-import Keyboard from "../keyboard/Keyboard";
-import {OperandLabel, OperatorLabel} from "../label/Label";
-import {Icon, IconLabel} from "../label/IconLabel";
+import Keyboard from "components/keyboard/Keyboard";
+import {OperandLabel, OperatorLabel} from "components/label/Label";
+import {Icon, IconLabel} from "components/label/IconLabel";
 
 const BinaryOperation = ({operation}) => {
     return (

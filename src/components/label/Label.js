@@ -1,5 +1,5 @@
-import {ShowValue} from "../../model/examples";
-import {IconLabel} from "./IconLabel";
+import {ShowValue} from "model/examples";
+import {IconLabel} from "components/label/IconLabel";
 
 const NumericLabel = ({value}) => {
     return (

@@ -1,4 +1,4 @@
-import {IconLabel} from "../label/IconLabel";
+import {IconLabel} from "components/label/IconLabel";
 
 export const NumericKey = ({value, click}) => {
     // console.log(`RENDERER: NumericKey ${value.value}`)

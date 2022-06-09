@@ -1,4 +1,4 @@
-import {NumericRange, OperationType, Unknown} from "./generator";
+import {NumericRange, OperationType, Unknown} from "model/generator";
 
 export interface ExerciseOptions {
     operations: OperationType[],

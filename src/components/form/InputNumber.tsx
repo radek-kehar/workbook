@@ -1,5 +1,5 @@
 import React from "react";
-import {InputNumberModel} from "../../model/form";
+import {InputNumberModel} from "model/form";
 
 type InputNumberProps<T> = {
     label: string,
