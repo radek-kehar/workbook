@@ -11,15 +11,29 @@ const emptyState = (): ExerciseOptions => {
         operations: [],
         range: {
             minDigit: 0,
-            maxDigit: 10
+            maxDigit: 0
         },
+        overbase: true,
         unknowns: []
     }
 }
 
 const initState = (): ExerciseOptions => {
     const value = loadExercise();
-    return value !== null ? value : emptyState();
+    if (value === null) {
+        return emptyState();
+
+    } else {
+        return {
+            operations: value.operations || [],
+            range: {
+                minDigit: value.range?.minDigit || 0,
+                maxDigit: value.range?.minDigit || 0
+            },
+            overbase: value.overbase || true,
+            unknowns: value.unknowns || []
+        }
+    }
 }
 //endregion
 
@@ -42,6 +56,9 @@ const createReducer = <T extends ActionType, P extends any>(): Reducer<ExerciseO
             draft.operations = empty.operations
             draft.range = empty.range
             draft.unknowns = empty.unknowns
+
+        } else if (action.type === ActionType.SetOverbase) {
+            draft.overbase = action.payload as boolean;
 
         } else {
             throw new Error();
@@ -72,6 +89,7 @@ enum ActionType {
     SetOperation,
     SetRange,
     SetUnknown,
+    SetOverbase,
     Reset
 }
 
@@ -98,6 +116,11 @@ interface SetUnknownAction extends ExerciseAction<ActionType.SetUnknown, CheckBo
 }
 export const setUnknownAction = (value: CheckBoxModel<Unknown>): SetUnknownAction => ({
     type: ActionType.SetUnknown,
+    payload: value
+});
+
+export const setOverbaseAction = (value: boolean): ExerciseAction<ActionType.SetOverbase, boolean> => ({
+    type: ActionType.SetOverbase,
     payload: value
 });
 

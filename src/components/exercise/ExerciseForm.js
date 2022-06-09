@@ -3,11 +3,19 @@ import InputNumber from "components/form/InputNumber";
 import CheckBoxGroup from "components/form/CheckBoxGroup";
 import Button from "components/form/Button";
 import {OperationType, Unknown} from "model/generator";
-import {resetAction, setOperationAction, setRangeAction, setUnknownAction} from "state/exercise";
+import {
+    resetAction,
+    setOperationAction,
+    setNoOverbaseAction,
+    setRangeAction,
+    setUnknownAction,
+    setOverbaseAction
+} from "state/exercise";
 import {ExerciseContext, ExerciseDispatchContext} from "components/exercise/ExerciseProvider";
 import {saveExercise} from "lib/store/exercise";
 import {operationTypeInfos, unknownInfos} from "message/enums";
 import { useNavigate } from "react-router-dom";
+import CheckBox from "components/form/CheckBox";
 
 const NumericRange = ({value, onChange}) => {
 
@@ -18,8 +26,8 @@ const NumericRange = ({value, onChange}) => {
 
     return (
         <div>
-            <InputNumber label='Od' max={value.maxDigit} name='min' value={value.minDigit} onChange={handleChange}/>
-            <InputNumber label='Do' min={value.minDigit} name='max' value={value.maxDigit} onChange={handleChange}/>
+            <InputNumber label='Od' max={value.maxDigit} name='minDigit' value={value.minDigit} onChange={handleChange}/>
+            <InputNumber label='Do' min={value.minDigit} name='maxDigit' value={value.maxDigit} onChange={handleChange}/>
         </div>
     )
 }
@@ -67,7 +75,7 @@ const ExerciseForm = () => {
             <form>
                 <CheckBoxGroup value={operations} onChange={(value) => handleChange(setOperationAction, value)}/>
                 <NumericRange value={state.range} onChange={(value) => handleChange(setRangeAction, value)}/>
-                {/*<CheckBox label='Přes 10' name='overbase' value={state.overbase} onChange={handleChange}/>*/}
+                <CheckBox label='Ne přes základ 10' name='overbase' value={!state.overbase} onChange={(value) => dispatch(setOverbaseAction(!value.value))}/>
                 <CheckBoxGroup value={unknowns} onChange={(value) => handleChange(setUnknownAction, value)}/>
                 <Button type='button' text='Reset' click={handleReset}/>
                 <Button type='button' text='Spusť' click={handleStart}/>

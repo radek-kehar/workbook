@@ -4,5 +4,5 @@ export interface ExerciseOptions {
     operations: OperationType[],
     range: NumericRange,
     unknowns: Unknown[],
-    //overbase: boolean
+    overbase: boolean
 }
