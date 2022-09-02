@@ -1,6 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconName} from '@fortawesome/fontawesome-common-types';
-import {CommandKey, KeyType, Operator, SymbolKey} from "model/examples";
+import {CommandKey, Operator, SymbolKey} from "model/examples";
 
 export enum Icon {
     EQUALS,
@@ -24,12 +24,28 @@ const IconDef: Record<Icon, IconName> = {
     [Icon.DELETE]: 'delete-left'
 }
 
-const OperatorIconDef: Record<string, Icon> = {
-    [Operator.EQUALS.toString()]: Icon.EQUALS,
-    [Operator.GREATER_THAN.toString()]: Icon.GREATER_THAN,
-    [Operator.LESS_THAN.toString()]: Icon.LESS_THAN,
-    [Operator.ADD.toString()]: Icon.PLUS,
-    [Operator.SUB.toString()]: Icon.MINUS,
+export interface IconLabelProp<T extends any> {
+    value: T
+}
+
+/**
+ * Common icon label
+ */
+export function IconLabel ({value} : IconLabelProp<Icon>) {
+    const name: IconName = IconDef[value]
+    return <FontAwesomeIcon icon={['fas', name]}/>
+}
+
+const CommandKeyIconDef: Record<CommandKey, Icon> = {
+    [CommandKey.ENTER]: Icon.CHECK,
+    [CommandKey.BACKSPACE]: Icon.DELETE
+}
+
+/**
+ * Command icon label
+ */
+export function  CommandIconLabel ({value} : IconLabelProp<CommandKey>) {
+    return <IconLabel value={CommandKeyIconDef[value]}/>
 }
 
 const SymbolKeyIconDef: Record<SymbolKey, Icon> = {
@@ -41,32 +57,26 @@ const SymbolKeyIconDef: Record<SymbolKey, Icon> = {
     [SymbolKey.COMMA]: Icon.MINUS // todo: dosadit spravnou ikonu
 }
 
-const CommandKeyIconDef: Record<CommandKey, Icon> = {
-    [CommandKey.ENTER]: Icon.CHECK,
-    [CommandKey.BACKSPACE]: Icon.DELETE
+/**
+ * Symbol icon label
+ */
+export function  SymbolIconLabel ({value} : IconLabelProp<SymbolKey>) {
+    return <IconLabel value={SymbolKeyIconDef[value]}/>
 }
 
-export interface IconLabelProp {
-    type: 'icon' | 'operator' | KeyType
-    value: Icon | string | CommandKey | SymbolKey
+const OperatorIconDef: Record<Operator, Icon> = {
+    [Operator.EQUALS]: Icon.EQUALS,
+    [Operator.GREATER_THAN]: Icon.GREATER_THAN,
+    [Operator.LESS_THAN]: Icon.LESS_THAN,
+    [Operator.ADD]: Icon.PLUS,
+    [Operator.SUB]: Icon.MINUS,
 }
 
 /**
- * Common icon label
+ * Operator icon label
  */
-export function IconLabel ({value, type = 'icon'} : IconLabelProp) {
-    let icon: Icon
-    if (type === 'icon') {
-        icon = value as Icon
-    } else if (type === 'operator') {
-        icon = OperatorIconDef[value.toString()]
-    } else if (type === KeyType.SYMBOL) {
-        icon = SymbolKeyIconDef[value]
-    } else if (type === KeyType.COMMAND) {
-        icon = CommandKeyIconDef[value]
-    }
-    const name: IconName = IconDef[icon]
-    return <FontAwesomeIcon icon={['fas', name]}/>
+export function  OperatorIconLabel ({value} : IconLabelProp<Operator>) {
+    return <IconLabel value={OperatorIconDef[value]}/>
 }
 
 

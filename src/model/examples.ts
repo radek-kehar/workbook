@@ -13,6 +13,7 @@ export interface Example<T extends BinaryExample | ComparisonExample> {
 }
 
 export interface BinaryExample {
+    discriminator: 'BinaryExample',
     operator: Value<Operator>,
     left: BinaryExample | Value<number>,
     right: BinaryExample | Value<number>,
@@ -26,6 +27,7 @@ export interface ComparisonExample {
 }
 
 export interface Value<T extends number | Operator> {
+    discriminator: 'Value',
     value: T,
     isUnknown: boolean,
     type?: Unknown,
@@ -92,7 +94,7 @@ export interface KeyboardKey<T extends number | SymbolKey | CommandKey> {
 }
 
 export enum Answer {
-    NOT_ANSWERED,
-    CORRECT,
-    WRONG,
+    NOT_ANSWERED = 'NOT_ANSWERED',
+    CORRECT = 'CORRECT',
+    WRONG = 'WRONG',
 }

@@ -7,9 +7,9 @@ export interface GeneratorOptions {
 }
 
 export enum OperationType {
-    COMPARE,
-    ADD,
-    SUB
+    COMPARE = "COMPARE",
+    ADD = "ADD",
+    SUB = "SUB"
 }
 
 export interface NumericRange {
@@ -18,9 +18,9 @@ export interface NumericRange {
 }
 
 export enum Unknown {
-    OPERAND,
-    OPERATOR,
-    RESULT
+    OPERAND = "OPERAND",
+    OPERATOR = "OPERATOR",
+    RESULT = "RESULT"
 }
 
 export interface GenericGenerator<T extends any> {

@@ -4,7 +4,6 @@ import ExerciseForm from "components/exercise/ExerciseForm";
 const Home = () => {
     return (
         <div>
-            {/*<Exercise/>*/}
             <ExerciseForm/>
         </div>
     );

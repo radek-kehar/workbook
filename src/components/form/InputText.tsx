@@ -3,21 +3,19 @@ import {InputModel} from "model/form";
 import ValidationError from "./validation/ValidationError";
 import {ValidationContext} from "./validation/ValidationProvider";
 
-type InputNumberProps<T> = {
+type InputTextProps = {
     label: string,
-    min?: number,
-    max?: number,
-    onChange: (event: InputModel<string, number>) => void
-} & InputModel<string, number>;
+    onChange: (event: InputModel<string, string>) => void
+} & InputModel<string, string>;
 
-const InputNumber = <T extends any>({label, name, min, max, value, onChange }: InputNumberProps<T>) => {
+const InputText = ({label, name, value, onChange }: InputTextProps) => {
 
     const validation = useContext(ValidationContext);
 
     const handleChange = (event) => {
         onChange({
             name: name, // event.target.name
-            value: Number(event.target.value)
+            value: event.target.value
         })
     }
 
@@ -25,11 +23,11 @@ const InputNumber = <T extends any>({label, name, min, max, value, onChange }: I
         <>
             <label>
                 {label}
-                <input type='number' min={min} max={max} name={name} value={value} onInput={handleChange}/>
+                <input type='text' name={name} value={value} onInput={handleChange}/>
             </label>
             <ValidationError value={validation.getError(name)}/>
         </>
     )
 }
 
-export default InputNumber;
+export default InputText;

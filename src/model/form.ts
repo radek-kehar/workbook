@@ -1,19 +1,8 @@
-
-export interface InputModel<T extends any, V extends any> {
-    name: T,
+export interface InputModel<N extends any, V extends any> {
+    name: N,
     value: V
 }
 
-export interface InputNumberModel<T extends any> extends InputModel<T, number> {
-    name: T,
-    value: number
-}
-
-export interface CheckBoxDef {
-    label: string
-}
-
-export interface CheckBoxModel<T extends any> extends InputModel<T, boolean> {
-    name: T,
-    value: boolean
+export interface InputField<L extends any, N extends any, V extends any> extends InputModel<N, V> {
+    label: L,
 }

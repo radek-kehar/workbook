@@ -1,36 +1,35 @@
 import CheckBox from "./CheckBox";
-import React from "react";
-import {CheckBoxDef, CheckBoxModel} from "model/form";
+import React, {useContext} from "react";
+import {InputModel} from "model/form";
+import {TypeInfo} from "../../message/enums";
+import ValidationError from "./validation/ValidationError";
+import {ValidationContext} from "./validation/ValidationProvider";
 
-type CheckboxGroupProps<T> = {
-    value: (CheckBoxDef & CheckBoxModel<T>)[],
-    onChange: (event: CheckBoxModel<T>) => void
+type CheckboxGroupProps<N extends keyof any> = {
+    labels: Record<N, TypeInfo>,
+    name: string,
+    value: (InputModel<N, boolean>)[],
+    onChange: (name: string, event: InputModel<N, boolean>) => void
 };
 
-const CheckBoxGroup = <T extends any>({value, onChange}: CheckboxGroupProps<T>) => {
+const CheckBoxGroup = <N extends keyof any>({labels, name, value, onChange}: CheckboxGroupProps<N>) => {
 
-    // // vraci cele pole s prenastavenyma hodnotama
-    // const handleChange = (event) => {
-    //     const temp = value.map(item => {
-    //         if (item.name === event.name) {
-    //             return {...item, value: event.value}
-    //
-    //         } else {
-    //             return item
-    //         }
-    //     })
-    //     onChange(temp)
-    // }
+    const validation = useContext(ValidationContext);
 
-    const handleChange = (event) => {
-        onChange(event)
+    const handleOnChange = (value: InputModel<N, boolean>) => {
+        onChange(name, value)
     }
 
     return (
         <div>
-            {value.map((item: CheckBoxDef & CheckBoxModel<T>) =>
-                <CheckBox key={item.name.toString()} label={item.label} name={item.name} value={item.value} onChange={handleChange}/>
+            {value.map((item: InputModel<N, boolean>) =>
+                <CheckBox key={item.name.toString()}
+                          label={labels[item.name].label}
+                          name={item.name}
+                          value={item.value}
+                          onChange={handleOnChange}/>
             )}
+            <ValidationError value={validation.getError(name)}/>
         </div>
     )
 }

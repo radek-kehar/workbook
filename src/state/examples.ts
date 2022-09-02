@@ -1,4 +1,4 @@
-import {CommandKey, Example, Examples, KeyboardKey, SymbolKey} from "model/examples";
+import {Answer, CommandKey, Example, Examples, KeyboardKey, SymbolKey} from "model/examples";
 import {createContext, Dispatch} from "react";
 import {Reducer, useImmerReducer} from "use-immer";
 import {execute} from "state/action/key-press-action";
@@ -15,14 +15,18 @@ const createState = (count: number): Examples => {
 
 //region GETTER
 export interface ExamplesGetter {
+    hasNext(): boolean,
     getExample(): Example<any>,
     getOrder(): number,
     getCount(): number,
-    hasNext(): boolean
+    getAnswers(): Answer[]
 }
 
 const createGetter = (state: Examples): ExamplesGetter => {
     return {
+        hasNext(): boolean {
+            return this.getCount() > this.getOrder();
+        },
         getExample() {
             return state.actual >= 0 ? state.examples[state.actual] : null;
         },
@@ -32,8 +36,8 @@ const createGetter = (state: Examples): ExamplesGetter => {
         getCount(): number {
             return state.examples.length;
         },
-        hasNext(): boolean {
-            return this.getCount() > this.getOrder();
+        getAnswers() {
+            return state.examples.map(item => item?.answer ?? Answer.NOT_ANSWERED)
         }
     }
 }
@@ -58,19 +62,16 @@ const createReducer = <T extends ActionType, P extends any>(): Reducer<Examples,
 }
 
 const initExample = (draft: Examples, action: InitExampleAction) => {
-    console.log('Action.InitExample')
     draft.actual = 0;
     draft.examples[draft.actual] = action.payload;
 }
 
 const nextExample = (draft: Examples, action: NextExampleAction) => {
-    console.log('Action.NextExample')
     draft.actual = draft.actual + 1;
     draft.examples[draft.actual] = action.payload;
 }
 
 const keyPressed = (draft: Examples, action: KeyPressedAction<any>) => {
-    console.log('Action.KeyPressed')
     const example = draft.examples.find((item: Example<any>, index: number) => draft.actual === index);
     const keyPressedAction = action as KeyPressedAction<any>;
     execute(example, keyPressedAction.payload);

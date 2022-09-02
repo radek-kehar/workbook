@@ -1,4 +1,4 @@
-import {ExerciseOptions} from "model/exercise";
+import {ExerciseModel} from "model/exercise";
 import {GeneratorOptions, NumericRange} from "model/generator";
 
 const ceilToBase = (value: number): number => {
@@ -24,7 +24,7 @@ const decompose = (value: NumericRange): NumericRange[] => {
     return result
 }
 
-export const generateOptions = (exercise: ExerciseOptions): GeneratorOptions[] => {
+export const generateOptions = (exercise: ExerciseModel): GeneratorOptions[] => {
     const options: GeneratorOptions[] = [];
     exercise.operations.forEach(item => {
         if (exercise.overbase === false && isOverbase(exercise.range)) {

@@ -44,6 +44,7 @@ export const transformOperationToExample = (options: GeneratorOptions, operation
 export const transformComparisonOperationToExample = (operation: ComparisonOperation): ComparisonExample => {
     return {
         operator: {
+            discriminator: 'Value',
             value: operation.operator,
             isUnknown: true,
             type: Unknown.OPERATOR,
@@ -51,10 +52,12 @@ export const transformComparisonOperationToExample = (operation: ComparisonOpera
             show: ShowValue.NONE
         },
         left: {
+            discriminator: 'Value',
             value: operation.left,
             isUnknown: false
         },
         right: {
+            discriminator: 'Value',
             value: operation.right,
             isUnknown: false
         }
@@ -92,11 +95,14 @@ export const transformBinaryOperationToExample = (operation: BinaryOperation): B
     const left: BinaryExample | Value<number> = transformOperand(operation.left);
     const right: BinaryExample | Value<number> = transformOperand(operation.right);
     const result: Value<number> = {
+        discriminator: 'Value',
         value: operation.result,
         isUnknown: false
     }
     return {
+        discriminator: 'BinaryExample',
         operator: {
+            discriminator: 'Value',
             value: operation.operator,
             isUnknown: false
         },
@@ -111,10 +117,10 @@ const transformOperand = (value: BinaryOperation | number): BinaryExample | Valu
         return transformBinaryOperationToExample(value);
 
     } else {
-        const result = {
+        return {
+            discriminator: 'Value',
             value,
             isUnknown: false
         };
-        return result;
     }
 }
