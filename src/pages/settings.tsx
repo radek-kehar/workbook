@@ -1,12 +1,13 @@
 import React from "react";
 import SettingsForm from "../components/settings/SettingsForm";
+import AppLayout from "../layouts/AppLayout";
 
-const Settings = () => {
+const SettingsPage = () => {
     return (
-        <div>
+        <AppLayout>
             <SettingsForm/>
-        </div>
+        </AppLayout>
     );
 };
 
-export default Settings;
+export default SettingsPage;

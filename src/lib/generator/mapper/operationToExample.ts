@@ -1,5 +1,4 @@
 import {
-    Answer,
     BinaryExample,
     BinaryOperation,
     ComparisonExample,

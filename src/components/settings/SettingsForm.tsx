@@ -26,7 +26,7 @@ const Form = () => {
 
     const validate = useContext(ValidationDispatchContext);
 
-    const [model, setModel] = useState({...settings});
+    const [model, setModel] = useState<SettingsModel>({...settings});
 
     const handleChangeInput = <T extends any>(value: InputModel<string, T>) => {
         setModel({...model, [value.name]: value.value})

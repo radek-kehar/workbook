@@ -3,52 +3,47 @@ import {Validate} from "../../model/validation";
 import {ProfileInfo} from "../../model/profile";
 import {ValidationDispatchContext, ValidationProvider} from "../form/validation/ValidationProvider";
 import InputText from "../form/InputText";
-import {emptyProfileInfo} from "../../model/factory/profile";
 import {InputModel} from "../../model/form";
 import Button from "../form/Button";
-import {useNavigate} from "react-router-dom";
 
-const validates: Validate<ProfileInfo>[] = [
-]
+const validates: Validate<ProfileInfo>[] = []
 
-const Form = () => {
-    const navigate = useNavigate();
+type ProfileInfoFormProps = {
+    value: ProfileInfo,
+    onSave: (value: ProfileInfo) => void
+};
 
-    const [model, setModel] = useState(emptyProfileInfo());
+const Form = ({value, onSave}: ProfileInfoFormProps) => {
+    const [model, setModel] = useState<ProfileInfo>({...value});
     const validate = useContext(ValidationDispatchContext);
 
-    const handleOnChangeName = (name: InputModel<string, string>) => {
-        setModel({...model, name: name.value})
+    const handleOnChange = <V extends any>(value: InputModel<string, V>) => {
+        setModel({...model, [value.name]: value.value})
     }
 
-    const handleStart = () => {
+    const handleSave = () => {
         const formValidation = validate(model);
         if (formValidation.isValid()) {
-            // todo: set profil
-            navigate("/home");
+            onSave(model);
         }
     }
-
-    const buttonText = model.name.length > 0
-        ? `Pokračuj jako ${model.name}`
-        : 'Pokračuj anonymně'
 
     return (
         <form>
             <InputText label='Jak se jmenuješ?'
-                         name={'name'}
-                         value={model.name}
-                         onChange={handleOnChangeName}/>
+                       name={'name'}
+                       value={model.name}
+                       onChange={handleOnChange}/>
 
-            <Button type='button' text={buttonText} click={handleStart}/>
+            <Button type='button' text='Uložit' click={handleSave}/>
         </form>
     )
 }
 
-const ProfileInfoForm = () => {
+const ProfileInfoForm = ({value, onSave}: ProfileInfoFormProps) => {
     return (
         <ValidationProvider validates={validates}>
-            <Form/>
+            <Form value={value} onSave={onSave}/>
         </ValidationProvider>
     )
 }

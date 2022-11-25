@@ -6,7 +6,7 @@ import ValidationError from "./validation/ValidationError";
 import {ValidationContext} from "./validation/ValidationProvider";
 
 type CheckboxGroupProps<N extends keyof any> = {
-    labels: Record<N, TypeInfo>,
+    labels: Record<N, TypeInfo<N>>,
     name: string,
     value: (InputModel<N, boolean>)[],
     onChange: (name: string, event: InputModel<N, boolean>) => void

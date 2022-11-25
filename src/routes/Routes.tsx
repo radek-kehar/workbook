@@ -1,18 +1,19 @@
-import {Route, Routes as Switch, useNavigate} from "react-router-dom";
+import {Route, Routes as Switch} from "react-router-dom";
 import React from "react";
-import Home from "pages/home";
-import Example from "pages/example";
-import ProfileInfoForm from "../components/profile/ProfileInfoForm";
-import Profile from "../pages/profile";
-import Settings from "../pages/settings";
+import HomePage from "pages/home";
+import ExamplePage from "pages/example";
+import SettingsPage from "../pages/settings";
+import ProfileDetailPage from "../pages/profile/detail";
+import ProfileCreationPage from "../pages/profile/creation";
 
 const Routes = () => {
     return (
         <Switch>
-            <Route index element={<Home/>}/>
-            <Route path="example" element={<Example/>}/>
-            <Route path="profile" element={<Profile/>}/>
-            <Route path="settings" element={<Settings/>}/>
+            <Route index element={<HomePage/>}/>
+            <Route path="example" element={<ExamplePage/>}/>
+            <Route path="profile/detail" element={<ProfileDetailPage/>}/>
+            <Route path="profile/creation" element={<ProfileCreationPage/>}/>
+            <Route path="settings" element={<SettingsPage/>}/>
         </Switch>
     );
 }

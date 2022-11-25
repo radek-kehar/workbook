@@ -1,17 +1,24 @@
-import {Classroom, ProfileInfo, ProfileModel} from "../profile";
+import {ProfileInfo, ProfileModel} from "../profile";
 import {defaultExerciseOptions} from "./exercise";
 import {defaultSettingsModel} from "./settings";
 
 export const emptyProfileInfo = (): ProfileInfo => {
     return {
-        name: "",
-        classroom: null
+        name: ""
     }
 }
 
-export const defaultProfileModel = (name: string, classroom: Classroom): ProfileModel => {
+export const newProfileModel = (info: ProfileInfo): ProfileModel => {
     return {
-        info: {name, classroom},
+        info,
+        exercise: defaultExerciseOptions(),
+        settings: defaultSettingsModel()
+    }
+}
+
+export const defaultProfileModel = (name: string): ProfileModel => {
+    return {
+        info: {name},
         exercise: defaultExerciseOptions(),
         settings: defaultSettingsModel()
     }

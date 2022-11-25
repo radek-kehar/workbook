@@ -1,5 +1,3 @@
-import {useState} from "react";
-
 class StorageWrapper {
 
     private storage: Storage;
