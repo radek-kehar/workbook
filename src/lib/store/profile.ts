@@ -1,5 +1,5 @@
-import {ProfileModel} from "../../model/profile";
-import {LocalStorage} from "./session-storage";
+import {ProfileModel} from "@/model/profile";
+import {LocalStorage} from "@/lib/store/session-storage";
 
 const STORAGE_KEY_PROFILE_LIST = 'profile.list';
 

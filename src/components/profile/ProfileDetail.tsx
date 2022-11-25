@@ -1,9 +1,9 @@
 import React, {useContext, useState} from "react";
-import ProfileInfoView from "./ProfileInfoView";
-import ProfileInfoForm from "./ProfileInfoForm";
-import Button from "../form/Button";
-import {ProfileContext, ProfileDispatch, ProfileDispatchContext, ProfilesState} from "./ProfileProvider";
-import {ProfileInfo} from "../../model/profile";
+import ProfileInfoView from "@/components/profile/ProfileInfoView";
+import ProfileInfoForm from "@/components/profile/ProfileInfoForm";
+import Button from "@/components/form/Button";
+import {ProfileContext, ProfileDispatch, ProfileDispatchContext, ProfilesState} from "@/components/profile/ProfileProvider";
+import {ProfileInfo} from "@/model/profile";
 import {useNavigate} from "react-router-dom";
 
 enum ProfileMode {

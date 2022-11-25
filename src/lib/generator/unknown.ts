@@ -1,5 +1,5 @@
-import {Unknown, UnknownGenerator} from "model/generator";
-import {genericGenerator} from "lib/generator/commons";
+import {Unknown, UnknownGenerator} from "@/model/generator";
+import {genericGenerator} from "@/lib/generator/commons";
 
 export const createGenerator = (unknowns: Unknown[]): UnknownGenerator => {
     if (unknowns.length === 1) {

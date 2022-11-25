@@ -1,12 +1,12 @@
 import {createContext, useEffect, useState} from "react";
-import {ProfileInfo, ProfileModel} from "../../model/profile";
-import {ProfileAlreadyExistsError, ProfileNotFoundError} from "../../model/error";
-import {SettingsModel} from "../../model/settings";
-import {ExerciseModel} from "../../model/exercise";
-import {createGenerator} from "../../service/example";
-import {ExampleGenerator} from "../../model/generator";
-import {defaultProfileModel, newProfileModel} from "../../model/factory/profile";
-import {readLastProfileName, readProfileList, saveLastProfileName, saveProfileList} from "../../lib/store/profile";
+import {ProfileInfo, ProfileModel} from "@/model/profile";
+import {ProfileAlreadyExistsError, ProfileNotFoundError} from "@/model/error";
+import {SettingsModel} from "@/model/settings";
+import {ExerciseModel} from "@/model/exercise";
+import {createGenerator} from "@/service/example";
+import {ExampleGenerator} from "@/model/generator";
+import {defaultProfileModel, newProfileModel} from "@/model/factory/profile";
+import {readLastProfileName, readProfileList, saveLastProfileName, saveProfileList} from "@/lib/store/profile";
 
 export const ANNONYMOUS_PROFILE_NAME = 'annonymous';
 

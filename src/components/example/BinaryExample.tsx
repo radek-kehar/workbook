@@ -1,7 +1,7 @@
-import Keyboard from "components/keyboard/Keyboard";
-import {OperandLabel, OperatorLabel} from "components/label/Label";
-import {Icon, IconLabel} from "components/label/IconLabel";
-import {BinaryExample as BinaryExampleModel, Example, KeyboardKey, Value} from "model/examples"
+import {OperandLabel, OperatorLabel} from "@/components/label/Label";
+import {Icon, IconLabel} from "@/components/label/IconLabel";
+import {BinaryExample as BinaryExampleModel, Example, KeyboardKey, Value} from "@/model/examples"
+import Keyboard from "@/components/keyboard/Keyboard";
 
 const getComponent = (value: BinaryExampleModel | Value<number>) => {
     return value.discriminator === 'Value'

@@ -1,6 +1,6 @@
-import {CommandKey as CommandKeyType, KeyboardKey, SymbolKey as SymbolKeyType} from "../../model/examples";
+import {CommandKey as CommandKeyType, KeyboardKey, SymbolKey as SymbolKeyType} from "@/model/examples";
 import {ReactNode} from "react";
-import {CommandIconLabel, SymbolIconLabel} from "../label/IconLabel";
+import {CommandIconLabel, SymbolIconLabel} from "@/components/label/IconLabel";
 
 type KeyProps<T extends number | SymbolKeyType | CommandKeyType> = {
     value: KeyboardKey<T>,

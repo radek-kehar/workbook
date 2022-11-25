@@ -1,7 +1,7 @@
-import {Answer, CommandKey, Example, Examples, KeyboardKey, SymbolKey} from "model/examples";
+import {Answer, CommandKey, Example, Examples, KeyboardKey, SymbolKey} from "@/model/examples";
 import {createContext, Dispatch} from "react";
 import {Reducer, useImmerReducer} from "use-immer";
-import {execute} from "state/action/key-press-action";
+import {execute} from "@/state/action/key-press-action";
 
 //region STATE
 const createState = (count: number): Examples => {

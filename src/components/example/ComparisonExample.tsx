@@ -1,6 +1,6 @@
-import Keyboard from "components/keyboard/Keyboard";
-import {OperandLabel, OperatorLabel} from "components/label/Label";
-import {Answer, ComparisonExample as ComparisonExampleModel, Example, KeyboardKey} from "model/examples";
+import Keyboard from "@/components/keyboard/Keyboard";
+import {OperandLabel, OperatorLabel} from "@/components/label/Label";
+import {Answer, ComparisonExample as ComparisonExampleModel, Example, KeyboardKey} from "@/model/examples";
 
 type ComparisonExampleProps = {
     example: Example<ComparisonExampleModel>,

@@ -1,9 +1,9 @@
 import CheckBox from "./CheckBox";
 import React, {useContext} from "react";
-import {InputModel} from "model/form";
-import {TypeInfo} from "../../message/enums";
-import ValidationError from "./validation/ValidationError";
-import {ValidationContext} from "./validation/ValidationProvider";
+import {InputModel} from "@/model/form";
+import {TypeInfo} from "@/message/enums";
+import {ValidationContext} from "@/components/form/validation/ValidationProvider";
+import ValidationError from "@/components/form/validation/ValidationError";
 
 type CheckboxGroupProps<N extends keyof any> = {
     labels: Record<N, TypeInfo<N>>,

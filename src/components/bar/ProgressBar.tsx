@@ -2,11 +2,11 @@
 type ProgressBarProps = {
     value: number,
     max: number,
-    click?: (number) => void
+    click?: (number: number) => void
 }
 
 function ProgressBar({value, max, click}: ProgressBarProps) {
-    const handleOnClick = (event) => {
+    const handleOnClick = (event: any) => {
         event.preventDefault();
         if (click) {
             click(event.target.getAttribute('data-value'));

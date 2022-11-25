@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
-import {InputModel} from "model/form";
-import ValidationError from "./validation/ValidationError";
-import {ValidationContext} from "./validation/ValidationProvider";
+import {InputModel} from "@/model/form";
+import {ValidationContext} from "@/components/form/validation/ValidationProvider";
+import ValidationError from "@/components/form/validation/ValidationError";
 
 type InputTextProps = {
     label: string,

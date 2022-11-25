@@ -1,10 +1,10 @@
-import {CommandKey, NumericKey, SymbolKey} from "components/keyboard/KeyKeyboard";
+import {CommandKey, NumericKey, SymbolKey} from "@/components/keyboard/KeyKeyboard";
 import {
     CommandKey as CommandKeyType,
     Keyboard as KeyboardModel,
     KeyboardKey,
     SymbolKey as SymbolKeyType
-} from "model/examples";
+} from "@/model/examples";
 
 type SpecificKeyboardProps<T extends number| CommandKeyType | SymbolKeyType> = {
     keys: KeyboardKey<T>[],

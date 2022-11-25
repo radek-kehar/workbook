@@ -1,7 +1,7 @@
 import React, {ReactNode, useContext} from "react";
-import SettingsNav from "../components/nav/SettingsNav";
+import SettingsNav from "@/components/nav/SettingsNav";
 import {Link} from "react-router-dom";
-import {ProfileContext, ProfilesState} from "../components/profile/ProfileProvider";
+import {ProfileContext, ProfilesState} from "@/components/profile/ProfileProvider";
 
 type AppLayoutProps = {
     children: ReactNode

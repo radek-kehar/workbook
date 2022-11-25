@@ -1,10 +1,10 @@
 import React, {useContext, useState} from "react";
-import {Validate} from "../../model/validation";
-import {ProfileInfo} from "../../model/profile";
-import {ValidationDispatchContext, ValidationProvider} from "../form/validation/ValidationProvider";
-import InputText from "../form/InputText";
-import {InputModel} from "../../model/form";
-import Button from "../form/Button";
+import {Validate} from "@/model/validation";
+import {ProfileInfo} from "@/model/profile";
+import {ValidationDispatchContext, ValidationProvider} from "@/components/form/validation/ValidationProvider";
+import InputText from "@/components/form/InputText";
+import {InputModel} from "@/model/form";
+import Button from "@/components/form/Button";
 
 const validates: Validate<ProfileInfo>[] = []
 

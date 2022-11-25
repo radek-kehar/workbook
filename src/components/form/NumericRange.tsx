@@ -1,9 +1,9 @@
-import {NumericRange as NumericRangeModel} from "../../model/generator";
-import InputNumber from "./InputNumber";
+import {NumericRange as NumericRangeModel} from "@/model/generator";
+import InputNumber from "@/components/form/InputNumber";
 import React, {useContext} from "react";
-import {InputModel} from "../../model/form";
-import ValidationError from "./validation/ValidationError";
-import {ValidationContext} from "./validation/ValidationProvider";
+import {InputModel} from "@/model/form";
+import {ValidationContext} from "@/components/form/validation/ValidationProvider";
+import ValidationError from "@/components/form/validation/ValidationError";
 
 type NumericRangeProps = {
     label: string,

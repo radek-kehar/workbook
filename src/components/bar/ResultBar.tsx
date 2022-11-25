@@ -1,12 +1,12 @@
-import {Answer} from "../../model/examples";
+import {Answer} from "@/model/examples";
 
 type ResultBarProps = {
     values: Answer[],
-    click?: (number) => void
+    click?: (number: number) => void
 }
 
 function ResultBar({values, click}: ResultBarProps) {
-    const handleOnClick = (event) => {
+    const handleOnClick = (event: any) => {
         event.preventDefault()
         if (click) {
             click(event.target.getAttribute('data-value'))

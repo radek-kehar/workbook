@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
-import {ProfileContext, ProfileDispatch, ProfileDispatchContext, ProfilesState} from "./ProfileProvider";
-import {ProfileModel} from "../../model/profile";
+import {ProfileContext, ProfileDispatch, ProfileDispatchContext, ProfilesState} from "@/components/profile/ProfileProvider";
+import {ProfileModel} from "@/model/profile";
 
 const ProfileSwitch = () => {
     const {profileList} = useContext<ProfilesState>(ProfileContext);

@@ -1,5 +1,5 @@
-import {SettingsModel} from "./settings";
-import {ExerciseModel} from "./exercise";
+import {SettingsModel} from "@/model/settings";
+import {ExerciseModel} from "@/model/exercise";
 
 export interface ProfileInfo {
     name: string

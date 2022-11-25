@@ -11,8 +11,8 @@ import {
     Operator,
     ShowValue,
     Value
-} from "model/examples";
-import {OperationType, Unknown} from "model/generator";
+} from "@/model/examples";
+import {OperationType, Unknown} from "@/model/generator";
 
 //region UnknownFinder
 interface UnknownFinder<T extends ComparisonExample | BinaryExample> {

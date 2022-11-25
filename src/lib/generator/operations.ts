@@ -1,6 +1,6 @@
-import {BinaryOperation, ComparisonOperation, Operator} from "model/examples";
-import {genericGenerator} from "lib/generator/commons";
-import {GeneratorOptions, GenericGenerator, NumericRange, OperationGenerator, OperationType} from "model/generator";
+import {BinaryOperation, ComparisonOperation, Operator} from "@/model/examples";
+import {genericGenerator} from "@/lib/generator/commons";
+import {GeneratorOptions, GenericGenerator, NumericRange, OperationGenerator, OperationType} from "@/model/generator";
 
 export const createGenerator = (options: GeneratorOptions): OperationGenerator<BinaryOperation | ComparisonOperation> => {
     switch (options.type) {

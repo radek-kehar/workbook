@@ -1,10 +1,10 @@
-import {createGenerator as createOperationGenerator} from "lib/generator/operations";
-import {createGenerator as createGeneratorUnknown} from "lib/generator/unknown";
-import {Answer, Example} from "model/examples";
-import {ExampleGenerator, GeneratorOptions, Generators, GenericGenerator,} from "model/generator";
-import {createKeyboard} from "lib/generator/creator/keyboard";
-import {transformOperationToExample} from "lib/generator/mapper/operationToExample";
-import {genericGenerator} from "lib/generator/commons";
+import {createGenerator as createOperationGenerator} from "@/lib/generator/operations";
+import {createGenerator as createGeneratorUnknown} from "@/lib/generator/unknown";
+import {Answer, Example} from "@/model/examples";
+import {ExampleGenerator, GeneratorOptions, Generators, GenericGenerator,} from "@/model/generator";
+import {createKeyboard} from "@/lib/generator/creator/keyboard";
+import {transformOperationToExample} from "@/lib/generator/mapper/operationToExample";
+import {genericGenerator} from "@/lib/generator/commons";
 
 export const createExampleGenerator = (options: GeneratorOptions[]): ExampleGenerator => {
     const generatorOfGenerators = createGeneratorOfGenerators(options);

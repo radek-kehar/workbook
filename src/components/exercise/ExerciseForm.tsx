@@ -1,18 +1,18 @@
 import React, {useContext} from "react";
-import CheckBoxGroup from "components/form/CheckBoxGroup";
-import Button from "components/form/Button";
-import {NumericRange as NumericRangeModel, OperationType, Unknown} from "model/generator";
-import {operationTypeInfos, unknownInfos} from "message/enums";
+import CheckBoxGroup from "@/components/form/CheckBoxGroup";
+import Button from "@/components/form/Button";
+import {NumericRange as NumericRangeModel, OperationType, Unknown} from "@/model/generator";
+import {operationTypeInfos, unknownInfos} from "@/message/enums";
 import {useNavigate} from "react-router-dom";
-import CheckBox from "components/form/CheckBox";
+import CheckBox from "@/components/form/CheckBox";
 import NumericRange from "../form/NumericRange";
-import {ExerciseFormModel, ExerciseModel} from "../../model/exercise";
-import {InputField, InputModel} from "../../model/form";
-import {Validate} from "../../model/validation";
+import {ExerciseFormModel, ExerciseModel} from "@/model/exercise";
+import {InputField, InputModel} from "@/model/form";
+import {Validate} from "@/model/validation";
 import {useImmer} from "use-immer";
-import {defaultExerciseOptions, valueOfExerciseOptions} from "../../model/factory/exercise";
-import {ValidationDispatchContext, ValidationProvider} from "../form/validation/ValidationProvider";
-import {ProfileContext, ProfileDispatchContext} from "../profile/ProfileProvider";
+import {defaultExerciseOptions, valueOfExerciseOptions} from "@/model/factory/exercise";
+import {ValidationDispatchContext, ValidationProvider} from "@/components/form/validation/ValidationProvider";
+import {ProfileContext, ProfileDispatchContext} from "@/components/profile/ProfileProvider";
 
 const allOperations: OperationType[] = Object.keys(OperationType).filter(item => isNaN(Number(item))).map(item => OperationType[item])
 

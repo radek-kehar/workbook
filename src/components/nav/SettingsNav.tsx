@@ -5,9 +5,9 @@ import {
     ProfileDispatch,
     ProfileDispatchContext,
     ProfilesState
-} from "../profile/ProfileProvider";
+} from "@/components/profile/ProfileProvider";
 import {Link} from "react-router-dom";
-import {ProfileModel} from "../../model/profile";
+import {ProfileModel} from "@/model/profile";
 
 const SettingsNav = () => {
     const {info, profileList} = useContext<ProfilesState>(ProfileContext);

@@ -1,13 +1,13 @@
 import React, {useContext, useState} from "react";
-import Button from "components/form/Button";
+import Button from "@/components/form/Button";
 import {useNavigate} from "react-router-dom";
-import {InputModel} from "../../model/form";
-import {Validate} from "../../model/validation";
-import {ValidationDispatchContext, ValidationProvider} from "../form/validation/ValidationProvider";
-import InputNumber from "../form/InputNumber";
-import {ProfileContext, ProfileDispatchContext} from "../profile/ProfileProvider";
-import {SettingsModel} from "../../model/settings";
-import CheckBox from "../form/CheckBox";
+import {InputModel} from "@/model/form";
+import {Validate} from "@/model/validation";
+import {ValidationDispatchContext, ValidationProvider} from "@/components/form/validation/ValidationProvider";
+import InputNumber from "@/components/form/InputNumber";
+import {ProfileContext, ProfileDispatchContext} from "@/components/profile/ProfileProvider";
+import {SettingsModel} from "@/model/settings";
+import CheckBox from "@/components/form/CheckBox";
 
 const validates: Validate<SettingsModel>[] = [
     (value: SettingsModel) => {

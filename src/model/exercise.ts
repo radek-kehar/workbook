@@ -1,5 +1,5 @@
-import {NumericRange as NumericRangeModel, NumericRange, OperationType, Unknown} from "model/generator";
-import {InputModel} from "./form";
+import {NumericRange as NumericRangeModel, NumericRange, OperationType, Unknown} from "@/model/generator";
+import {InputModel} from "@/model/form";
 
 export interface ExerciseModel {
     operations: OperationType[],

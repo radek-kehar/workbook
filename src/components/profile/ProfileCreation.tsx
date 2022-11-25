@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
-import ProfileInfoForm from "./ProfileInfoForm";
-import {ProfileDispatch, ProfileDispatchContext} from "./ProfileProvider";
-import {ProfileInfo} from "../../model/profile";
-import {emptyProfileInfo} from "../../model/factory/profile";
+import ProfileInfoForm from "@/components/profile/ProfileInfoForm";
+import {ProfileDispatch, ProfileDispatchContext} from "@/components/profile/ProfileProvider";
+import {ProfileInfo} from "@/model/profile";
+import {emptyProfileInfo} from "@/model/factory/profile";
 import {useNavigate} from "react-router-dom";
 
 const ProfileCreation = () => {

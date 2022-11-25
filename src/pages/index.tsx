@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter} from "react-router-dom";
-import Routes from "routes/Routes";
+import Routes from "@/routes/Routes";
 
 const Pages = () => {
     return (

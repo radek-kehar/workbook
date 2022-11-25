@@ -1,5 +1,5 @@
-import {ExerciseModel} from "model/exercise";
-import {GeneratorOptions, NumericRange} from "model/generator";
+import {GeneratorOptions, NumericRange} from "@/model/generator";
+import {ExerciseModel} from "@/model/exercise";
 
 const ceilToBase = (value: number): number => {
     return Math.ceil(value / 10) * 10;

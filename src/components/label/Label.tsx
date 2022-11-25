@@ -1,5 +1,5 @@
-import {Operator, ShowValue, Value} from "model/examples";
-import {OperatorIconLabel} from "components/label/IconLabel";
+import {Operator, ShowValue, Value} from "@/model/examples";
+import {OperatorIconLabel} from "@/components/label/IconLabel";
 
 type NumericLabelProps = {
     value: number

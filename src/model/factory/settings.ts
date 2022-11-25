@@ -1,4 +1,4 @@
-import {SettingsModel} from "../settings";
+import {SettingsModel} from "@/model/settings";
 
 const emptySettingsModel = (): SettingsModel => {
     return {

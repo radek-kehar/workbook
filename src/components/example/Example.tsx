@@ -1,13 +1,13 @@
 import {useContext, useEffect, useRef} from "react";
 import {initExampleAction, keyPressedAction, nextExampleAction, useExamples} from "../../state/examples";
-import {Answer} from "model/examples";
-import BinaryExample from "components/example/BinaryExample";
-import {OperationType} from "model/generator";
-import ComparisonExample from "components/example/ComparisonExample";
+import {Answer} from "../../model/examples";
+import BinaryExample from "../../components/example/BinaryExample";
+import {OperationType} from "../../model/generator";
+import ComparisonExample from "../../components/example/ComparisonExample";
 import ProgressBar from "../bar/ProgressBar";
 import ResultBar from "../bar/ResultBar";
 import {useNavigate} from "react-router-dom";
-import {ProfileContext} from "../profile/ProfileProvider";
+import {ProfileContext} from "@/components/profile/ProfileProvider";
 
 function Example() {
     const navigate = useNavigate();

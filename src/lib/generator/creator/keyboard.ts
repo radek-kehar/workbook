@@ -1,5 +1,5 @@
-import {GeneratorOptions, NumericRange, OperationType, Unknown} from "model/generator";
-import {CommandKey, Keyboard, KeyboardKey, KeyboardType, KeyType, SymbolKey} from "model/examples";
+import {GeneratorOptions, NumericRange, OperationType, Unknown} from "@/model/generator";
+import {CommandKey, Keyboard, KeyboardKey, KeyboardType, KeyType, SymbolKey} from "@/model/examples";
 
 export const createKeyboard = (options: GeneratorOptions): Keyboard => {
     switch (options.type) {

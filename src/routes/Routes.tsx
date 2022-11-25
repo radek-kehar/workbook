@@ -1,10 +1,10 @@
 import {Route, Routes as Switch} from "react-router-dom";
 import React from "react";
-import HomePage from "pages/home";
-import ExamplePage from "pages/example";
-import SettingsPage from "../pages/settings";
-import ProfileDetailPage from "../pages/profile/detail";
-import ProfileCreationPage from "../pages/profile/creation";
+import SettingsPage from "@/pages/settings";
+import ProfileDetailPage from "@/pages/profile/detail";
+import ProfileCreationPage from "@/pages/profile/creation";
+import ExamplePage from "@/pages/example";
+import HomePage from "@/pages/home";
 
 const Routes = () => {
     return (

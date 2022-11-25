@@ -1,5 +1,5 @@
-import {ExerciseFormModel, ExerciseModel} from "../exercise";
-import {OperationType, Unknown} from "../generator";
+import {ExerciseFormModel, ExerciseModel} from "@/model/exercise";
+import {OperationType, Unknown} from "@/model/generator";
 
 const emptyExerciseOptions = (): ExerciseModel => {
     return {

@@ -1,5 +1,5 @@
 import React from "react";
-import {ProfileInfo} from "../../model/profile";
+import {ProfileInfo} from "@/model/profile";
 
 type ProfileInfoViewProps = {
     value: ProfileInfo

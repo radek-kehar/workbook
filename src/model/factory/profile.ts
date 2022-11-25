@@ -1,6 +1,6 @@
-import {ProfileInfo, ProfileModel} from "../profile";
-import {defaultExerciseOptions} from "./exercise";
-import {defaultSettingsModel} from "./settings";
+import {ProfileInfo, ProfileModel} from "@/model/profile";
+import {defaultSettingsModel} from "@/model/factory/settings";
+import {defaultExerciseOptions} from "@/model/factory/exercise";
 
 export const emptyProfileInfo = (): ProfileInfo => {
     return {

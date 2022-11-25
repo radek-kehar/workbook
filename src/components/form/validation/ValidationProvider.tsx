@@ -1,5 +1,5 @@
 import React, {createContext, ReactNode, useState} from "react";
-import {EmptyFormValidation, FormValidation, FormValidationBuilder, Validate} from "../../../model/validation";
+import {EmptyFormValidation, FormValidation, FormValidationBuilder, Validate} from "@/model/validation";
 
 export const ValidationContext = createContext<FormValidation>(null);
 
