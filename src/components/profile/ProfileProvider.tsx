@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {ProfileInfo, ProfileModel} from "@/model/profile";
 import {ProfileAlreadyExistsError, ProfileNotFoundError} from "@/model/error";
 import {SettingsModel} from "@/model/settings";
@@ -7,6 +7,7 @@ import {createGenerator} from "@/service/example";
 import {ExampleGenerator} from "@/model/generator";
 import {defaultProfileModel, newProfileModel} from "@/model/factory/profile";
 import {readLastProfileName, readProfileList, saveLastProfileName, saveProfileList} from "@/lib/store/profile";
+import {ThemeProviderDispatchContext} from "@/components/themes/ThemeProvider";
 
 export const ANNONYMOUS_PROFILE_NAME = 'annonymous';
 
@@ -89,7 +90,7 @@ const initProfileList = (profileModelList: ProfileModel[], activeProfileName: st
             return {
                 profileList,
                 activeProfile: activeProfileIdx,
-                isSelectProfile: false
+                isSelectProfile: activeProfileIdx >= 0
             }
         }
     }
@@ -108,10 +109,14 @@ export function ProfileProvider({children}) {
         initProfileList(readProfileList(), readLastProfileName())
     );
 
+    const dispatchTheme = useContext(ThemeProviderDispatchContext);
+
     useEffect(() => {
         saveProfileList(profileListState.profileList);
+        const activeProfile = profileListState.profileList[profileListState.activeProfile];
         if (profileListState.isSelectProfile) {
-            saveLastProfileName(profileListState.profileList[profileListState.activeProfile]);
+            saveLastProfileName(activeProfile);
+            dispatchTheme(activeProfile.info.theme);
         }
     }, [profileListState])
 
@@ -120,6 +125,7 @@ export function ProfileProvider({children}) {
         info: profileListState.profileList[activeProfil].info,
         settings: profileListState.profileList[activeProfil].settings,
         exercise: profileListState.profileList[activeProfil].exercise,
+        generator: profileListState.profileList[activeProfil].generator,
         profileList: profileListState.profileList,
         isSelectProfile: profileListState.isSelectProfile
     }

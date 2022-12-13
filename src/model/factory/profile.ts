@@ -4,7 +4,9 @@ import {defaultExerciseOptions} from "@/model/factory/exercise";
 
 export const emptyProfileInfo = (): ProfileInfo => {
     return {
-        name: ""
+        name: "",
+        avatar: "dog",
+        theme: "blue"
     }
 }
 
@@ -18,7 +20,7 @@ export const newProfileModel = (info: ProfileInfo): ProfileModel => {
 
 export const defaultProfileModel = (name: string): ProfileModel => {
     return {
-        info: {name},
+        info: {name, theme: "blue", avatar: "dog"},
         exercise: defaultExerciseOptions(),
         settings: defaultSettingsModel()
     }

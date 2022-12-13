@@ -1,16 +1,15 @@
-import React, {useContext} from "react";
+import React from "react";
 import {InputModel} from "@/model/form";
-import {ValidationContext} from "@/components/form/validation/ValidationProvider";
-import ValidationError from "@/components/form/validation/ValidationError";
+import InputContainers, {defaultInputClassName} from "@/components/containers/InputContainers";
 
 type InputTextProps = {
     label: string,
-    onChange: (event: InputModel<string, string>) => void
+    onChange?: (event: InputModel<string, string>) => void,
+    autoFocus?: boolean,
+    disabled?: boolean
 } & InputModel<string, string>;
 
-const InputText = ({label, name, value, onChange }: InputTextProps) => {
-
-    const validation = useContext(ValidationContext);
+const InputText = ({autoFocus, disabled, label, name, value, onChange }: InputTextProps) => {
 
     const handleChange = (event) => {
         onChange({
@@ -20,13 +19,10 @@ const InputText = ({label, name, value, onChange }: InputTextProps) => {
     }
 
     return (
-        <>
-            <label>
-                {label}
-                <input type='text' name={name} value={value} onInput={handleChange}/>
-            </label>
-            <ValidationError value={validation.getError(name)}/>
-        </>
+        <InputContainers label={label} name={name}>
+            <input autoFocus={autoFocus} disabled={disabled} name={name} type='text' value={value} onInput={handleChange}
+                   className={defaultInputClassName}/>
+        </InputContainers>
     )
 }
 

@@ -22,13 +22,16 @@ const CheckBoxGroup = <N extends keyof any>({labels, name, value, onChange}: Che
 
     return (
         <div>
-            {value.map((item: InputModel<N, boolean>) =>
-                <CheckBox key={item.name.toString()}
-                          label={labels[item.name].label}
-                          name={item.name}
-                          value={item.value}
-                          onChange={handleOnChange}/>
-            )}
+            <div className="flex flex-wrap gap-x-6 gap-y-4">
+                {value.map((item: InputModel<N, boolean>) =>
+                    <CheckBox key={item.name.toString()}
+                              description={labels[item.name].description}
+                              label={labels[item.name].label}
+                              name={item.name}
+                              value={item.value}
+                              onChange={handleOnChange}/>
+                )}
+            </div>
             <ValidationError value={validation.getError(name)}/>
         </div>
     )

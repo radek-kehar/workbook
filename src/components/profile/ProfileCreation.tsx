@@ -4,6 +4,7 @@ import {ProfileDispatch, ProfileDispatchContext} from "@/components/profile/Prof
 import {ProfileInfo} from "@/model/profile";
 import {emptyProfileInfo} from "@/model/factory/profile";
 import {useNavigate} from "react-router-dom";
+import PageHeader from "@/components/basic/PageHeader";
 
 const ProfileCreation = () => {
     const navigate = useNavigate();
@@ -14,9 +15,14 @@ const ProfileCreation = () => {
         navigate("/");
     }
 
+    const handleOnCancel = () => {
+        navigate("/");
+    }
+
     return (
         <>
-            <ProfileInfoForm value={emptyProfileInfo()} onSave={handleOnSave}/>
+            <PageHeader description="Vytvoření nového uživatele" title="Nový uživatel"/>
+            <ProfileInfoForm value={emptyProfileInfo()} onCancel={handleOnCancel} onSave={handleOnSave}/>
         </>
     )
 }

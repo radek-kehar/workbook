@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import Button from "@/components/form/Button";
+import Button, {ButtonMode} from "@/components/form/Button";
 import {useNavigate} from "react-router-dom";
 import {InputModel} from "@/model/form";
 import {Validate} from "@/model/validation";
@@ -8,6 +8,9 @@ import InputNumber from "@/components/form/InputNumber";
 import {ProfileContext, ProfileDispatchContext} from "@/components/profile/ProfileProvider";
 import {SettingsModel} from "@/model/settings";
 import CheckBox from "@/components/form/CheckBox";
+import ToolbarContainers from "@/components/containers/ToolbarContainers";
+import PageHeader from "@/components/basic/PageHeader";
+import FormSection from "@/components/basic/FormSection";
 
 const validates: Validate<SettingsModel>[] = [
     (value: SettingsModel) => {
@@ -40,33 +43,44 @@ const Form = () => {
         }
     }
 
+    const handleCancel = () => {
+        navigate("/");
+    }
+
     return (
         <form>
-            <div>
-                <InputNumber label='Počet příkladů'
-                             min={1}
-                             name='count'
-                             value={model.count}
-                             onChange={handleChangeInput}/>
-            </div>
-            <div>
-                <CheckBox label='Při chybné odpovědi pokračovat'
-                          name='continueWithError'
-                          value={model.continueWithError}
-                          onChange={handleChangeInput}/>
-            </div>
-            <div>
-                <Button type='button' text='Uložit' click={handleStart}/>
-            </div>
+            <FormSection>
+                <InputNumber label='Počet příkladů v rámci jednoho cvičení'
+                         min={1}
+                         name='count'
+                         value={model.count}
+                         onChange={handleChangeInput}/>
+
+                <div className="mt-4">
+                    <CheckBox label='Při chybné odpovědi pokračovat'
+                              description="Při chybné odpovědi bude možné pokračovat na další příklad."
+                              name='continueWithError'
+                              value={model.continueWithError}
+                              onChange={handleChangeInput}/>
+                </div>
+            </FormSection>
+
+            <ToolbarContainers className="mt-4">
+                <Button mode={ButtonMode.THEMATHIC} type='button' text='Uložit' click={handleStart}/>
+                <Button mode={ButtonMode.SECONDARY} type='button' text='Zrušit' click={handleCancel}/>
+            </ToolbarContainers>
         </form>
     )
 }
 
 const SettingsForm = () => {
     return (
-        <ValidationProvider validates={validates}>
-            <Form/>
-        </ValidationProvider>
+        <>
+            <PageHeader description="Úprava nastavení" title="Nastavení"/>
+            <ValidationProvider validates={validates}>
+                <Form/>
+            </ValidationProvider>
+        </>
     )
 }
 

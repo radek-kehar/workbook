@@ -1,18 +1,17 @@
-import React, {useContext} from "react";
+import React from "react";
 import {InputModel} from "@/model/form";
-import {ValidationContext} from "@/components/form/validation/ValidationProvider";
-import ValidationError from "@/components/form/validation/ValidationError";
+import InputContainers, {defaultInputClassName} from "@/components/containers/InputContainers";
 
 type InputNumberProps = {
+    autoFocus?: boolean,
+    disabled?: boolean,
     label: string,
     min?: number,
     max?: number,
     onChange: (event: InputModel<string, number>) => void
 } & InputModel<string, number>;
 
-const InputNumber = ({label, name, min, max, value, onChange }: InputNumberProps) => {
-
-    const validation = useContext(ValidationContext);
+const InputNumber = ({autoFocus, disabled, label, name, min, max, value, onChange }: InputNumberProps) => {
 
     const handleChange = (event) => {
         onChange({
@@ -22,13 +21,10 @@ const InputNumber = ({label, name, min, max, value, onChange }: InputNumberProps
     }
 
     return (
-        <>
-            <label>
-                {label}
-                <input type='number' min={min} max={max} name={name} value={value} onInput={handleChange}/>
-            </label>
-            <ValidationError value={validation.getError(name)}/>
-        </>
+        <InputContainers label={label} name={name}>
+            <input autoFocus={autoFocus} disabled={disabled} min={min} max={max} name={name} type='number' value={value} onInput={handleChange}
+                   className={defaultInputClassName}/>
+        </InputContainers>
     )
 }
 

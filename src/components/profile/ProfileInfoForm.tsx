@@ -1,19 +1,33 @@
 import React, {useContext, useState} from "react";
 import {Validate} from "@/model/validation";
-import {ProfileInfo} from "@/model/profile";
+import {AvatarOptionList, ProfileInfo} from "@/model/profile";
 import {ValidationDispatchContext, ValidationProvider} from "@/components/form/validation/ValidationProvider";
 import InputText from "@/components/form/InputText";
 import {InputModel} from "@/model/form";
-import Button from "@/components/form/Button";
+import Button, {ButtonMode} from "@/components/form/Button";
+import {useNavigate} from "react-router-dom";
+import ToolbarContainers from "@/components/containers/ToolbarContainers";
+import {ThemeOptionList} from "@/themes";
+import {recordValues} from "@/lib/utils";
+import ColorPicker from "@/components/form/ColorPicker";
+import AvatarPicker from "@/components/form/AvatarPicker";
+import FormSection from "@/components/basic/FormSection";
 
-const validates: Validate<ProfileInfo>[] = []
-
-type ProfileInfoFormProps = {
+export type ProfileInfoFormProps = {
     value: ProfileInfo,
+    onCancel: () => void,
     onSave: (value: ProfileInfo) => void
 };
 
-const Form = ({value, onSave}: ProfileInfoFormProps) => {
+const ThemeOptions = recordValues(ThemeOptionList);
+
+const AvatarOptions = recordValues(AvatarOptionList);
+
+const validates: Validate<ProfileInfo>[] = []
+
+const Form = ({value, onCancel, onSave}: ProfileInfoFormProps) => {
+    const navigation = useNavigate();
+
     const [model, setModel] = useState<ProfileInfo>({...value});
     const validate = useContext(ValidationDispatchContext);
 
@@ -28,22 +42,48 @@ const Form = ({value, onSave}: ProfileInfoFormProps) => {
         }
     }
 
+    const handleCancel = () => {
+        onCancel();
+    }
+
     return (
         <form>
-            <InputText label='Jak se jmenuješ?'
-                       name={'name'}
-                       value={model.name}
-                       onChange={handleOnChange}/>
+            <FormSection>
+                <InputText label="Jméno"
+                           name={'name'}
+                           value={model.name}
+                           onChange={handleOnChange}
+                           autoFocus/>
 
-            <Button type='button' text='Uložit' click={handleSave}/>
+                <div className="mt-4">
+                    <AvatarPicker label="Obrázek"
+                                  name={'avatar'}
+                                  options={AvatarOptions}
+                                  value={model.avatar}
+                                  onChange={handleOnChange}/>
+                </div>
+
+                <div className="mt-4">
+                    <ColorPicker label="Barva"
+                                 name={'theme'}
+                                 options={ThemeOptions}
+                                 value={model.theme}
+                                 onChange={handleOnChange}/>
+                </div>
+            </FormSection>
+
+            <ToolbarContainers className="mt-4">
+                <Button mode={ButtonMode.THEMATHIC} type='button' text='Uložit' click={handleSave}/>
+                <Button mode={ButtonMode.SECONDARY} type='button' text='Zrušit' click={handleCancel}/>
+            </ToolbarContainers>
         </form>
     )
 }
 
-const ProfileInfoForm = ({value, onSave}: ProfileInfoFormProps) => {
+const ProfileInfoForm = ({value, onCancel, onSave}: ProfileInfoFormProps) => {
     return (
         <ValidationProvider validates={validates}>
-            <Form value={value} onSave={onSave}/>
+            <Form value={value} onCancel={onCancel} onSave={onSave}/>
         </ValidationProvider>
     )
 }

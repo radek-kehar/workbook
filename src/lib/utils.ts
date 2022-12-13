@@ -33,3 +33,15 @@ export const isSameObject = <T extends any, U extends any>(obj1: T, obj2: U): bo
 
     return result;
 }
+
+export function recordValues<K extends string | number, T extends any>(object: Record<K, T>) {
+    const result: T[] = [];
+    for (const temp in object) {
+        result.push(object[temp]);
+    }
+    return result;
+}
+
+export function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}

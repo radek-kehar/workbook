@@ -1,5 +1,5 @@
 import {ProfileModel} from "@/model/profile";
-import {LocalStorage} from "@/lib/store/session-storage";
+import {LocalStorage, SessionStorage} from "@/lib/store/session-storage";
 
 const STORAGE_KEY_PROFILE_LIST = 'profile.list';
 
@@ -14,9 +14,9 @@ export const readProfileList = (): ProfileModel[] | null => {
 const STORAGE_KEY_PROFILE_LAST = 'profile.last';
 
 export const saveLastProfileName = (value: ProfileModel): void => {
-    LocalStorage.setStorage<string>(STORAGE_KEY_PROFILE_LAST, value.info.name);
+    SessionStorage.setStorage<string>(STORAGE_KEY_PROFILE_LAST, value.info.name);
 }
 
 export const readLastProfileName = (): string | null => {
-    return LocalStorage.getStorage<string>(STORAGE_KEY_PROFILE_LAST);
+    return SessionStorage.getStorage<string>(STORAGE_KEY_PROFILE_LAST);
 }

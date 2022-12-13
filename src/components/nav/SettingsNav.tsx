@@ -8,6 +8,7 @@ import {
 } from "@/components/profile/ProfileProvider";
 import {Link} from "react-router-dom";
 import {ProfileModel} from "@/model/profile";
+import Avatar, {AvatarSize} from "@/components/basic/Avatar";
 
 const SettingsNav = () => {
     const {info, profileList} = useContext<ProfilesState>(ProfileContext);
@@ -19,24 +20,30 @@ const SettingsNav = () => {
 
     const profileListFiltered = profileList.filter(item => item.info.name !== info.name);
 
+    const existsAnnonymous = info.name === ANNONYMOUS_PROFILE_NAME;
+
     return (
         <nav>
-            <ul>
-                <li>
-                    {info.name}
+            <ul className="flex flex-col justify-between">
+                <li className="pt-2 border-b pb-2">
+                    Aktuální uživatel: {info.name}
                 </li>
-                <li>
+                <li className="pt-2">
                     <Link to="/profile/detail">Můj profil</Link>
                 </li>
-                <li>
+                <li className={`pt-2 pb-2 ${!existsAnnonymous ? 'border-b' : ''}`}>
                     <Link to="/settings">Moje nastavení</Link>
                 </li>
-                {profileListFiltered.map(profile =>
-                    <li key={profile.info.name}>
-                        <button onClick={() => handleOnClick(profile)}>{profile.info.name}</button>
+                {profileListFiltered.map((profile, i, {length}) =>
+                    <li key={profile.info.name} className={`pt-2 ${length - 1 === i ? 'border-b pb-2' : ''}`}>
+                        <div className="flex flex-row justify-start items-center cursor-pointer"
+                             onClick={() => handleOnClick(profile)}>
+                            <div className="mr-2"><Avatar profile={profile.info} size={AvatarSize.SMALL}/></div>
+                            <span>{profile.info.name}</span>
+                        </div>
                     </li>
                 )}
-                <li hidden={info.name === ANNONYMOUS_PROFILE_NAME}>
+                <li hidden={existsAnnonymous} className="pt-2 pb-2">
                     <Link to="/profile/creation">Nový profil</Link>
                 </li>
             </ul>
