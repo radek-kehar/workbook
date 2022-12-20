@@ -177,6 +177,17 @@ const setStyleKey = (keyboard: Keyboard, key: KeyboardKey<any>, style: KeyboardK
         keyboard.keys.command.forEach(styledFce);
     }
 }
+
+const clearStyleKey = (keyboard: Keyboard) => {
+    const styledFce = item => {
+        if (item.style) {
+            item.style = null;
+        }
+    };
+    keyboard.keys.numeric.forEach(styledFce);
+    keyboard.keys.symbol.forEach(styledFce);
+    keyboard.keys.command.forEach(styledFce);
+}
 //endregion
 
 // region Main executor
@@ -202,15 +213,20 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
     } else if (example.keyboard.type === KeyboardType.CONFIRM_BY_ENTER) {
         if (pressedKey.type === KeyType.NUMERIC || pressedKey.type === KeyType.SYMBOL) {
             unknownServant.add(pressedKey.value);
+            clearStyleKey(example.keyboard);
 
         } else if (pressedKey.type === KeyType.COMMAND) {
             if (CommandKey.BACKSPACE === pressedKey.value) {
                 unknownServant.remove();
+                clearStyleKey(example.keyboard);
 
             } else if (CommandKey.ENTER === pressedKey.value) {
                 example.answer = unknownServant.evaulate();
                 if (example.answer === Answer.CORRECT) {
                     disableKeyboard(example.keyboard);
+                    setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.POSITIVE);
+                } else if (example.answer === Answer.WRONG) {
+                    setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.NEGATIVE);
                 }
             }
         }
