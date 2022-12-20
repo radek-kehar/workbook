@@ -5,7 +5,8 @@ import {
     ComparisonExample,
     Example,
     Keyboard,
-    KeyboardKey, KeyboardKeyStyle,
+    KeyboardKey,
+    KeyboardKeyStyle,
     KeyboardType,
     KeyType,
     Operator,
@@ -13,7 +14,6 @@ import {
     Value
 } from "@/model/examples";
 import {OperationType, Unknown} from "@/model/generator";
-import {AnswerType} from "@/components/modals/ConfirmationAlert";
 
 //region UnknownFinder
 interface UnknownFinder<T extends ComparisonExample | BinaryExample> {
@@ -77,11 +77,11 @@ class UnknownServantFactory {
 }
 
 interface UnknownServant<T extends number | Operator> {
-    set(value: T);
+    set(value: T): T;
 
-    add(value: T);
+    add(value: T): T;
 
-    remove();
+    remove(): T;
 
     evaulate();
 
@@ -111,19 +111,22 @@ class NumberUnknownServant extends AbstractUnknownServant<number> implements Unk
         super(value);
     }
 
-    set(value: number) {
+    set(value: number): number {
         this.value.entered = value;
+        return this.value.entered;
     }
 
-    add(value: number) {
+    add(value: number): number {
         this.value.entered = this.value.entered ? Number(`${this.value.entered}${value}`) : value;
+        return this.value.entered;
     }
 
-    remove() {
+    remove(): number {
         if (this.value.entered !== null) {
             const entered = this.value.entered.toString().slice(0, -1);
             this.value.entered = entered.length > 0 ? Number(entered) : null;
         }
+        return this.value.entered;
     }
 }
 
@@ -133,24 +136,27 @@ class OperatorUnknownServant extends AbstractUnknownServant<Operator> implements
         super(value);
     }
 
-    set(value: Operator) {
+    set(value: Operator): Operator {
         this.value.entered = value;
+        return this.value.entered;
     }
 
-    add(value: Operator) {
+    add(value: Operator): Operator {
         this.set(value);
+        return this.value.entered;
     }
 
-    remove() {
+    remove(): Operator {
         this.value.entered = null;
+        return this.value.entered;
     }
 }
 
 //endregion
 
 //region Keyboard
-const disableKeyboard = (keyboard: Keyboard) => {
-    const disabledFce = item => item.disabled = true;
+const disableKeyboard = (keyboard: Keyboard, disabled: boolean = true) => {
+    const disabledFce = item => item.disabled = disabled;
     keyboard.keys.numeric.forEach(disabledFce);
     keyboard.keys.symbol.forEach(disabledFce);
     keyboard.keys.command.forEach(disabledFce);
@@ -179,11 +185,7 @@ const setStyleKey = (keyboard: Keyboard, key: KeyboardKey<any>, style: KeyboardK
 }
 
 const clearStyleKey = (keyboard: Keyboard) => {
-    const styledFce = item => {
-        if (item.style) {
-            item.style = null;
-        }
-    };
+    const styledFce = item => item.style = KeyboardKeyStyle.DEFAULT;
     keyboard.keys.numeric.forEach(styledFce);
     keyboard.keys.symbol.forEach(styledFce);
     keyboard.keys.command.forEach(styledFce);
@@ -202,6 +204,7 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
         if (example.answer === Answer.CORRECT) {
             unknownServant.show(ShowValue.ENTERED);
             disableKeyboard(example.keyboard);
+            clearStyleKey(example.keyboard); // todo: clearStyleKey sjednotit s setStyleKey
             setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.POSITIVE);
 
         } else if (example.answer === Answer.WRONG) {
@@ -213,15 +216,22 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
     } else if (example.keyboard.type === KeyboardType.CONFIRM_BY_ENTER) {
         if (pressedKey.type === KeyType.NUMERIC || pressedKey.type === KeyType.SYMBOL) {
             unknownServant.add(pressedKey.value);
+            unknownServant.show(ShowValue.ENTERED);
+            example.keyboard.keys.command.forEach(item => item.disabled = false);
             clearStyleKey(example.keyboard);
 
         } else if (pressedKey.type === KeyType.COMMAND) {
             if (CommandKey.BACKSPACE === pressedKey.value) {
-                unknownServant.remove();
+                const enteredValue = unknownServant.remove();
+                if (enteredValue === null || enteredValue === undefined) {
+                    unknownServant.show(ShowValue.NONE);
+                    example.keyboard.keys.command.forEach(item => item.disabled = true);
+                }
                 clearStyleKey(example.keyboard);
 
             } else if (CommandKey.ENTER === pressedKey.value) {
                 example.answer = unknownServant.evaulate();
+                unknownServant.show(ShowValue.ENTERED);
                 if (example.answer === Answer.CORRECT) {
                     disableKeyboard(example.keyboard);
                     setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.POSITIVE);
@@ -230,7 +240,6 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
                 }
             }
         }
-        unknownServant.show(ShowValue.ENTERED);
     }
 }
 //endregion

@@ -88,6 +88,7 @@ export enum KeyType {
 }
 
 export enum KeyboardKeyStyle {
+    DEFAULT = 'DEFAULT',
     POSITIVE = 'POSITIVE',
     NEGATIVE = 'NEGATIVE'
 }

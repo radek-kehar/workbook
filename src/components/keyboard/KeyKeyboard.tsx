@@ -26,16 +26,18 @@ const CommonKey = <T extends number | SymbolKeyType | CommandKeyType>({value, cl
         click(value)
     }
 
-    let bg
+    let className
     if (value.style === KeyboardKeyStyle.POSITIVE) {
-        bg = 'bg-positive'
+        className = 'bg-positive'
     } else if (value.style === KeyboardKeyStyle.NEGATIVE) {
-        bg = 'bg-negative'
+        className = 'bg-negative disabled:text-gray-300'
+    } else {
+        className = 'disabled:text-gray-300'
     }
 
     return (
         <button type="button" disabled={value.disabled} onClick={handleOnClick}
-                className={classNames(bg, "flex flex-row justify-center items-center overflow-hidden rounded-lg border border-gray-100 p-4")}>
+                className={classNames(className, "flex flex-row justify-center items-center overflow-hidden rounded-lg border border-gray-100 p-4")}>
             {children}
         </button>
     )

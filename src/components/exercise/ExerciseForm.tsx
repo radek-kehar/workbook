@@ -141,8 +141,11 @@ const Form = () => {
                     <CheckBox label='Nepočítat přes 10'
                               description="Vynechat příklady, ve kterých je nutné počítat přes základ 10. Tzn. vynechat příklady typu: 7 + 8 = 15"
                               name={model.overbase.name}
-                              value={model.overbase.value}
-                              onChange={(value) => changeValue(model.overbase.name, value)}/>
+                              value={!model.overbase.value}
+                              onChange={(value) => {
+                                  const temp = {...value, value: !value.value};
+                                  changeValue(model.overbase.name, temp);
+                              }}/>
                 </div>
             </FormSection>
 

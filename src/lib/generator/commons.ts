@@ -19,6 +19,9 @@ class UniqueRandom<T extends any> {
         this.refill();
         const index = Math.floor(Math.random() * this.uniqueRandoms.length);
         const val = this.uniqueRandoms[index];
+        if (val === null || val === undefined) {
+            throw new Error();
+        }
         // now remove that value from the array
         this.uniqueRandoms.splice(index, 1);
         return val;

@@ -1,7 +1,16 @@
 import {GeneratorOptions, NumericRange, OperationType, Unknown} from "@/model/generator";
-import {Answer, CommandKey, Keyboard, KeyboardKey, KeyboardType, KeyType, SymbolKey} from "@/model/examples";
+import {
+    Answer,
+    CommandKey,
+    Keyboard,
+    KeyboardKey,
+    KeyboardKeyStyle,
+    KeyboardType,
+    KeyType,
+    SymbolKey
+} from "@/model/examples";
 
-export const createKeyboard = (options: GeneratorOptions): Keyboard => {
+export const createKeyboard = (options: GeneratorOptions, unknown: Unknown): Keyboard => {
     switch (options.type) {
         case OperationType.COMPARE:
             return {
@@ -15,7 +24,7 @@ export const createKeyboard = (options: GeneratorOptions): Keyboard => {
 
         case OperationType.ADD:
         case OperationType.SUB:
-            if (options.unknowns.find(item => item === Unknown.OPERATOR)) {
+            if (unknown === Unknown.OPERATOR) {
                 return {
                     type: KeyboardType.AUTO_ENTER,
                     keys: {
@@ -46,7 +55,7 @@ export const createKeyboard = (options: GeneratorOptions): Keyboard => {
 const createNumericKeys = (min: number, max: number): KeyboardKey<number>[] => {
     const keys: KeyboardKey<number>[] = [];
     for (let i = min; i <= max; i++) {
-        keys.push({type: KeyType.NUMERIC, value: i, disabled: false, answer: Answer.NOT_ANSWERED});
+        keys.push({type: KeyType.NUMERIC, value: i, disabled: false, style: KeyboardKeyStyle.DEFAULT});
     }
     return keys;
 }
@@ -54,7 +63,7 @@ const createNumericKeys = (min: number, max: number): KeyboardKey<number>[] => {
 const createSymbolKeys = (...symbols: SymbolKey[]): KeyboardKey<SymbolKey>[] => {
     const keys: KeyboardKey<SymbolKey>[] = [];
     for (const symbol of symbols) {
-        keys.push({type: KeyType.SYMBOL, value: symbol, disabled: false, answer: Answer.NOT_ANSWERED});
+        keys.push({type: KeyType.SYMBOL, value: symbol, disabled: false, style: KeyboardKeyStyle.DEFAULT});
     }
     return keys;
 }
@@ -62,7 +71,7 @@ const createSymbolKeys = (...symbols: SymbolKey[]): KeyboardKey<SymbolKey>[] => 
 const createCommandKeys = (...commands: CommandKey[]): KeyboardKey<CommandKey>[] => {
     const keys: KeyboardKey<CommandKey>[] = [];
     for (const comand of commands) {
-        keys.push({type: KeyType.COMMAND, value: comand, disabled: false, answer: Answer.NOT_ANSWERED});
+        keys.push({type: KeyType.COMMAND, value: comand, disabled: true, style: KeyboardKeyStyle.DEFAULT});
     }
     return keys;
 }

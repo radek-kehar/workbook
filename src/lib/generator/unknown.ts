@@ -16,7 +16,7 @@ export const createGenerator = (unknowns: Unknown[]): UnknownGenerator => {
             values.push(Unknown.OPERAND);
         }
         const valuesFactory = (): Unknown[] => {
-            return values;
+            return [...values];
         }
         const generator = genericGenerator(valuesFactory);
         return {

@@ -14,7 +14,7 @@ export const createExampleGenerator = (options: GeneratorOptions[]): ExampleGene
         const operation = generator.operationGenerator.next();
         const unknown = generator.unknownGenerator.next();
         const example = transformOperationToExample(generator.options, operation, unknown);
-        const keyboard = createKeyboard(generator.options);
+        const keyboard = createKeyboard(generator.options, unknown);
         return {
             type: generator.options.type,
             operation: example,
