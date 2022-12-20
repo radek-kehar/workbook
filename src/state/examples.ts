@@ -52,6 +52,9 @@ const createReducer = <T extends ActionType, P extends any>(): Reducer<Examples,
         } else if (action.type === ActionType.NextExample) {
             nextExample(draft, action as NextExampleAction)
 
+        } else if (action.type === ActionType.GoToExample) {
+            goToExample(draft, action as GoToExampleAction)
+
         } else if (action.type === ActionType.KeyPressed) {
             keyPressed(draft, action as KeyPressedAction<any>)
 
@@ -71,6 +74,10 @@ const nextExample = (draft: Examples, action: NextExampleAction) => {
     draft.examples[draft.actual] = action.payload;
 }
 
+const goToExample = (draft: Examples, action: GoToExampleAction) => {
+    draft.actual = action.payload;
+}
+
 const keyPressed = (draft: Examples, action: KeyPressedAction<any>) => {
     const example = draft.examples.find((item: Example<any>, index: number) => draft.actual === index);
     const keyPressedAction = action as KeyPressedAction<any>;
@@ -82,6 +89,7 @@ const keyPressed = (draft: Examples, action: KeyPressedAction<any>) => {
 enum ActionType {
     InitExample,
     NextExample,
+    GoToExample,
     KeyPressed
 }
 
@@ -103,6 +111,14 @@ interface NextExampleAction extends ExampleAction<ActionType.NextExample, Exampl
 
 export const nextExampleAction = (value: Example<any>): NextExampleAction => ({
     type: ActionType.NextExample,
+    payload: value
+});
+
+interface GoToExampleAction extends ExampleAction<ActionType.GoToExample, number> {
+}
+
+export const goToExampleAction = (value: number): GoToExampleAction => ({
+    type: ActionType.GoToExample,
     payload: value
 });
 

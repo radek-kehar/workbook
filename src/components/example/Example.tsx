@@ -1,5 +1,11 @@
-import {useContext, useEffect, useRef} from "react";
-import {initExampleAction, keyPressedAction, nextExampleAction, useExamples} from "../../state/examples";
+import React, {useContext, useEffect, useRef} from "react";
+import {
+    goToExampleAction,
+    initExampleAction,
+    keyPressedAction,
+    nextExampleAction,
+    useExamples
+} from "../../state/examples";
 import {Answer} from "../../model/examples";
 import BinaryExample from "../../components/example/BinaryExample";
 import {OperationType} from "../../model/generator";
@@ -8,6 +14,8 @@ import ProgressBar from "../bar/ProgressBar";
 import ResultBar from "../bar/ResultBar";
 import {useNavigate} from "react-router-dom";
 import {ProfileContext} from "@/components/profile/ProfileProvider";
+import ExampleLayout from "@/components/layouts/ExampleLayout";
+import {XMarkIcon} from "@heroicons/react/24/solid";
 
 function Example() {
     const navigate = useNavigate();
@@ -60,17 +68,28 @@ function Example() {
         }
     }
 
+    const handleOnClose = () => {
+        navigate("/")
+    }
+
+    const handleOnGoToExample = (example: number) => {
+        dispatch(goToExampleAction(example));
+    }
+
     const chooseBarComponent = (continueWithError) => {
         return continueWithError
-            ? <ResultBar values={state.getAnswers()}/>
+            ? <ResultBar values={state.getAnswers()} click={handleOnGoToExample}/>
             : <ProgressBar max={state.getCount()} value={state.getOrder()}/>
     }
 
     return (
-        <div>
+        <ExampleLayout>
+            <XMarkIcon className="absolute top-0 right-0 z-10 h-6 w-6 bg-white cursor-pointer" aria-hidden="true" onClick={handleOnClose}/>
             {chooseBarComponent(settings.continueWithError)}
-            {chooseExampleComponent(example)}
-        </div>
+            <div className="p-4 pt-2">
+                {chooseExampleComponent(example)}
+            </div>
+        </ExampleLayout>
     );
 }
 

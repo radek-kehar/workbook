@@ -12,6 +12,8 @@ import {recordValues} from "@/lib/utils";
 import ColorPicker from "@/components/form/ColorPicker";
 import AvatarPicker from "@/components/form/AvatarPicker";
 import FormSection from "@/components/basic/FormSection";
+import {ExerciseModel} from "@/model/exercise";
+import {ProfileContext, ProfilesState} from "@/components/profile/ProfileProvider";
 
 export type ProfileInfoFormProps = {
     value: ProfileInfo,
@@ -23,7 +25,18 @@ const ThemeOptions = recordValues(ThemeOptionList);
 
 const AvatarOptions = recordValues(AvatarOptionList);
 
-const validates: Validate<ProfileInfo>[] = []
+const createValidates = (profiles: ProfilesState): Validate<ProfileInfo>[] => {
+    return [
+        (value: ProfileInfo) => {
+            if (profiles.profileList
+                .filter((item, index) => profiles.activeProfile !== index)
+                .filter((item, index) => item.info.name === value.name).length > 0) {
+                return {key: 'name', error: 'Pod zadaným jménem je již zaregistrován jiný uživatel.'};
+            }
+            return true;
+        }
+    ]
+}
 
 const Form = ({value, onCancel, onSave}: ProfileInfoFormProps) => {
     const navigation = useNavigate();
@@ -81,6 +94,9 @@ const Form = ({value, onCancel, onSave}: ProfileInfoFormProps) => {
 }
 
 const ProfileInfoForm = ({value, onCancel, onSave}: ProfileInfoFormProps) => {
+    const profiles = useContext<ProfilesState>(ProfileContext);
+    const validates = createValidates(profiles);
+
     return (
         <ValidationProvider validates={validates}>
             <Form value={value} onCancel={onCancel} onSave={onSave}/>

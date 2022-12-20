@@ -1,31 +1,57 @@
+import {classNames} from "@/lib/utils";
 
-type ProgressBarProps = {
+type ProgressItemProps = {
+    className?: string,
     value: number,
-    max: number,
-    click?: (number: number) => void
+    onClick?: (number: number) => void
 }
 
-function ProgressBar({value, max, click}: ProgressBarProps) {
+export const ProgressItem = ({className, value, onClick}: ProgressItemProps) => {
     const handleOnClick = (event: any) => {
         event.preventDefault();
-        if (click) {
-            click(event.target.getAttribute('data-value'));
-        }
-    }
-
-    const percentage = 100 * (value / max)
-
-    const divs = []
-    for (let i = 0; i < max; i++) {
-        if (i < value) {
-            divs.push(<div key={i} data-value={i} onClick={handleOnClick}>*</div>)
-        } else {
-            divs.push(<div key={i} data-value={i}>-</div>)
+        if (onClick) {
+            onClick(event.target.getAttribute('data-value'));
         }
     }
 
     return (
-        <div>
+        <div data-value={value} className={classNames(className, "grow h-6")} onClick={handleOnClick}/>
+    )
+}
+
+type ProgressInfoProps = {
+    value: number,
+    max: number
+}
+
+export const ProgressInfo = ({value, max}: ProgressInfoProps) => {
+    return (
+        <div className="absolute flex justify-center items-center text-center text-sm w-full h-6">
+            <div className="bg-white text-theme-background font-semibold border rounded border-theme-background pl-4 pr-4">
+                {value}. z {max}
+            </div>
+        </div>
+    )
+}
+
+type ProgressBarProps = {
+    value: number,
+    max: number
+}
+
+const ProgressBar = ({value, max}: ProgressBarProps) => {
+    const divs = []
+    for (let i = 0; i < max; i++) {
+        if (i < value) {
+            divs.push(<ProgressItem key={i} value={i} className="bg-theme-background"/>)
+        } else {
+            divs.push(<ProgressItem key={i} value={i} className="bg-gray-100"/>)
+        }
+    }
+
+    return (
+        <div className={`relative flex flex-row gap-[0.05rem] h-6`}>
+            <ProgressInfo value={value} max={max}/>
             {divs}
         </div>
     )

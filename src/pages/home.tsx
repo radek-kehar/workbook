@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import ExerciseForm from "@/components/exercise/ExerciseForm";
-import AppLayout from "@/layouts/AppLayout";
+import AppLayout from "@/components/layouts/AppLayout";
 import {ProfileContext, ProfilesState} from "@/components/profile/ProfileProvider";
 import ProfileSwitch from "@/components/profile/ProfileSwitch";
 

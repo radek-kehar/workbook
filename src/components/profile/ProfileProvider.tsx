@@ -23,6 +23,7 @@ interface ProfileList {
 
 export interface ProfilesState extends ProfileState {
     profileList: ProfileState[],
+    activeProfile: number,
     isSelectProfile: boolean
 }
 
@@ -120,13 +121,14 @@ export function ProfileProvider({children}) {
         }
     }, [profileListState])
 
-    const activeProfil = profileListState.activeProfile > -1 ? profileListState.activeProfile : 0;
+    const activeProfile = profileListState.activeProfile > -1 ? profileListState.activeProfile : 0;
     const value: ProfilesState = {
-        info: profileListState.profileList[activeProfil].info,
-        settings: profileListState.profileList[activeProfil].settings,
-        exercise: profileListState.profileList[activeProfil].exercise,
-        generator: profileListState.profileList[activeProfil].generator,
+        info: profileListState.profileList[activeProfile].info,
+        settings: profileListState.profileList[activeProfile].settings,
+        exercise: profileListState.profileList[activeProfile].exercise,
+        generator: profileListState.profileList[activeProfile].generator,
         profileList: profileListState.profileList,
+        activeProfile: activeProfile,
         isSelectProfile: profileListState.isSelectProfile
     }
 

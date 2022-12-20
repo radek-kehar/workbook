@@ -29,13 +29,23 @@ type BinaryOperationProps = {
 
 const BinaryOperation = ({operation}: BinaryOperationProps) => {
     return (
-        <>
-            {getComponent(operation.left)}
-            <OperatorLabel value={operation.operator}/>
-            {getComponent(operation.right)}
-            <IconLabel value={Icon.EQUALS}/>
-            <OperandLabel value={operation.result}/>
-        </>
+        <div className="flex flex-row justify-center items-center text-center content-center">
+            <div className="grow text-8xl">
+                {getComponent(operation.left)}
+            </div>
+            <div className="grow text-6xl">
+                <OperatorLabel value={operation.operator}/>
+            </div>
+            <div className="grow text-8xl">
+                {getComponent(operation.right)}
+            </div>
+            <div className="grow text-6xl">
+                <IconLabel value={Icon.EQUALS}/>
+            </div>
+            <div className="grow text-8xl">
+                <OperandLabel value={operation.result}/>
+            </div>
+        </div>
     )
 }
 
@@ -46,9 +56,11 @@ type BinaryExampleProps = {
 
 const BinaryExample = ({example, keyPressed}: BinaryExampleProps) => {
     return (
-        <div>
+        <div className="flex flex-col content-center gap-y-4">
             <BinaryOperation operation={example.operation}/>
-            {<Keyboard value={example.keyboard} click={keyPressed}/>}
+            <div className="text-6xl">
+                <Keyboard value={example.keyboard} click={keyPressed}/>
+            </div>
         </div>
     );
 }

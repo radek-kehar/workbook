@@ -1,6 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconName} from '@fortawesome/fontawesome-common-types';
 import {CommandKey, Operator, SymbolKey} from "@/model/examples";
+import {classNames} from "@/lib/utils";
 
 export enum Icon {
     EQUALS,
@@ -25,15 +26,16 @@ const IconDef: Record<Icon, IconName> = {
 }
 
 export interface IconLabelProp<T extends any> {
+    className?: string,
     value: T
 }
 
 /**
  * Common icon label
  */
-export function IconLabel ({value} : IconLabelProp<Icon>) {
+export function IconLabel ({className, value} : IconLabelProp<Icon>) {
     const name: IconName = IconDef[value]
-    return <FontAwesomeIcon icon={['fas', name]}/>
+    return <FontAwesomeIcon className={className} icon={['fas', name]}/>
 }
 
 const CommandKeyIconDef: Record<CommandKey, Icon> = {
@@ -44,8 +46,8 @@ const CommandKeyIconDef: Record<CommandKey, Icon> = {
 /**
  * Command icon label
  */
-export function  CommandIconLabel ({value} : IconLabelProp<CommandKey>) {
-    return <IconLabel value={CommandKeyIconDef[value]}/>
+export function  CommandIconLabel ({className, value} : IconLabelProp<CommandKey>) {
+    return <IconLabel className={className} value={CommandKeyIconDef[value]}/>
 }
 
 const SymbolKeyIconDef: Record<SymbolKey, Icon> = {
@@ -60,8 +62,8 @@ const SymbolKeyIconDef: Record<SymbolKey, Icon> = {
 /**
  * Symbol icon label
  */
-export function  SymbolIconLabel ({value} : IconLabelProp<SymbolKey>) {
-    return <IconLabel value={SymbolKeyIconDef[value]}/>
+export function  SymbolIconLabel ({className, value} : IconLabelProp<SymbolKey>) {
+    return <IconLabel className={className} value={SymbolKeyIconDef[value]}/>
 }
 
 const OperatorIconDef: Record<Operator, Icon> = {
@@ -75,8 +77,8 @@ const OperatorIconDef: Record<Operator, Icon> = {
 /**
  * Operator icon label
  */
-export function  OperatorIconLabel ({value} : IconLabelProp<Operator>) {
-    return <IconLabel value={OperatorIconDef[value]}/>
+export function  OperatorIconLabel ({className, value} : IconLabelProp<Operator>) {
+    return <IconLabel className={className} value={OperatorIconDef[value]} />
 }
 
 

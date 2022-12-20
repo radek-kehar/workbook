@@ -87,10 +87,16 @@ export enum KeyType {
     COMMAND
 }
 
+export enum KeyboardKeyStyle {
+    POSITIVE = 'POSITIVE',
+    NEGATIVE = 'NEGATIVE'
+}
+
 export interface KeyboardKey<T extends number | SymbolKey | CommandKey> {
     type: KeyType
     value: T
     disabled: boolean
+    style: KeyboardKeyStyle
 }
 
 export enum Answer {

@@ -5,7 +5,7 @@ import {
     ComparisonExample,
     Example,
     Keyboard,
-    KeyboardKey,
+    KeyboardKey, KeyboardKeyStyle,
     KeyboardType,
     KeyType,
     Operator,
@@ -13,6 +13,7 @@ import {
     Value
 } from "@/model/examples";
 import {OperationType, Unknown} from "@/model/generator";
+import {AnswerType} from "@/components/modals/ConfirmationAlert";
 
 //region UnknownFinder
 interface UnknownFinder<T extends ComparisonExample | BinaryExample> {
@@ -165,6 +166,17 @@ const disableKey = (keyboard: Keyboard, key: KeyboardKey<any>) => {
         keyboard.keys.command.forEach(disabledFce);
     }
 }
+
+const setStyleKey = (keyboard: Keyboard, key: KeyboardKey<any>, style: KeyboardKeyStyle) => {
+    const styledFce = item => item.style = item.value === key.value ? style : item.style;
+    if (key.type === KeyType.NUMERIC) {
+        keyboard.keys.numeric.forEach(styledFce);
+    } else if (key.type === KeyType.SYMBOL) {
+        keyboard.keys.symbol.forEach(styledFce);
+    } else if (key.type === KeyType.COMMAND) {
+        keyboard.keys.command.forEach(styledFce);
+    }
+}
 //endregion
 
 // region Main executor
@@ -179,10 +191,12 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
         if (example.answer === Answer.CORRECT) {
             unknownServant.show(ShowValue.ENTERED);
             disableKeyboard(example.keyboard);
+            setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.POSITIVE);
 
         } else if (example.answer === Answer.WRONG) {
             unknownServant.show(ShowValue.NONE);
             disableKey(example.keyboard, pressedKey);
+            setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.NEGATIVE);
         }
 
     } else if (example.keyboard.type === KeyboardType.CONFIRM_BY_ENTER) {

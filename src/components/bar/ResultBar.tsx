@@ -1,4 +1,5 @@
 import {Answer} from "@/model/examples";
+import {ProgressItem} from "@/components/bar/ProgressBar";
 
 type ResultBarProps = {
     values: Answer[],
@@ -6,24 +7,21 @@ type ResultBarProps = {
 }
 
 function ResultBar({values, click}: ResultBarProps) {
-    const handleOnClick = (event: any) => {
-        event.preventDefault()
-        if (click) {
-            click(event.target.getAttribute('data-value'))
-        }
-    }
-
     const divs = []
     for (let i = 0; i < values.length; i++) {
-        if (values[i] !== undefined && values[i] !== null) {
-            divs.push(<div key={i} data-value={i} onClick={handleOnClick}>{values[i]}</div>)
+        if (values[i] === Answer.CORRECT) {
+            divs.push(<ProgressItem key={i} value={i} onClick={click} className="bg-positive"/>)
+
+        } else if (values[i] === Answer.WRONG) {
+            divs.push(<ProgressItem key={i} value={i} onClick={click} className="bg-negative"/>)
+
         } else {
-            divs.push(<div key={i} data-value={i}></div>)
+            divs.push(<ProgressItem key={i} value={i} className="bg-gray-100"/>)
         }
     }
 
     return (
-        <div>
+        <div className={`relative flex flex-row gap-[0.05rem] h-6`}>
             {divs}
         </div>
     )

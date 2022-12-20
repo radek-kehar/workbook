@@ -1,3 +1,4 @@
+import {ProfilesState} from "@/components/profile/ProfileProvider";
 
 export interface ErrorValidation {
     key: string;
