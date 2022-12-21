@@ -12,7 +12,6 @@ import {recordValues} from "@/lib/utils";
 import ColorPicker from "@/components/form/ColorPicker";
 import AvatarPicker from "@/components/form/AvatarPicker";
 import FormSection from "@/components/basic/FormSection";
-import {ExerciseModel} from "@/model/exercise";
 import {ProfileContext, ProfilesState} from "@/components/profile/ProfileProvider";
 
 export type ProfileInfoFormProps = {

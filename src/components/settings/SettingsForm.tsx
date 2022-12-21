@@ -56,13 +56,14 @@ const Form = () => {
                          value={model.count}
                          onChange={handleChangeInput}/>
 
-                <div className="mt-4">
-                    <CheckBox label='Při chybné odpovědi pokračovat'
-                              description="Při chybné odpovědi bude možné pokračovat na další příklad."
-                              name='continueWithError'
-                              value={model.continueWithError}
-                              onChange={handleChangeInput}/>
-                </div>
+                {/*TODO: Funkcionalita je zatím vypnuta. V komponente ExerciseForm je nutne zprovoznit chovani aplikace.*/}
+                {/*<div className="mt-4">*/}
+                {/*    <CheckBox label='Při chybné odpovědi pokračovat'*/}
+                {/*              description="Při chybné odpovědi bude možné pokračovat na další příklad."*/}
+                {/*              name='continueWithError'*/}
+                {/*              value={model.continueWithError}*/}
+                {/*              onChange={handleChangeInput}/>*/}
+                {/*</div>*/}
             </FormSection>
 
             <ToolbarContainers className="mt-4">

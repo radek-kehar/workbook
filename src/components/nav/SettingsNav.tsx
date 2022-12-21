@@ -25,13 +25,13 @@ const SettingsNav = () => {
     return (
         <nav>
             <ul className="flex flex-col justify-between">
-                <li className="pt-2 border-b pb-2">
+                <li className="pt-2 font-bold">
                     Aktuální uživatel: {info.name}
                 </li>
                 <li className="pt-2">
                     <Link to="/profile/detail">Můj profil</Link>
                 </li>
-                <li className={`pt-2 pb-2 ${!existsAnnonymous ? 'border-b' : ''}`}>
+                <li className={`pt-2 pb-2 border-b`}>
                     <Link to="/settings">Moje nastavení</Link>
                 </li>
                 {profileListFiltered.map((profile, i, {length}) =>
@@ -43,8 +43,11 @@ const SettingsNav = () => {
                         </div>
                     </li>
                 )}
-                <li hidden={existsAnnonymous} className="pt-2 pb-2">
+                <li hidden={existsAnnonymous} className="pt-2 pb-2 border-b">
                     <Link to="/profile/creation">Nový profil</Link>
+                </li>
+                <li className="pt-2 pb-2">
+                    <Link to="/about">O aplikaci</Link>
                 </li>
             </ul>
         </nav>

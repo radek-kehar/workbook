@@ -5,6 +5,7 @@ import ProfileDetailPage from "@/pages/profile/detail";
 import ProfileCreationPage from "@/pages/profile/creation";
 import ExamplePage from "@/pages/example";
 import HomePage from "@/pages/home";
+import AboutPage from "@/pages/about";
 
 const Routes = () => {
     return (
@@ -14,6 +15,7 @@ const Routes = () => {
             <Route path="profile/detail" element={<ProfileDetailPage/>}/>
             <Route path="profile/creation" element={<ProfileCreationPage/>}/>
             <Route path="settings" element={<SettingsPage/>}/>
+            <Route path="about" element={<AboutPage/>}/>
         </Switch>
     );
 }

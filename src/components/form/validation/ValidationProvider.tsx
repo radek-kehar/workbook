@@ -1,7 +1,5 @@
-import React, {createContext, ReactNode, useContext, useState} from "react";
+import React, {createContext, ReactNode, useState} from "react";
 import {EmptyFormValidation, FormValidation, FormValidationBuilder, Validate} from "@/model/validation";
-import {ProfileInfo} from "@/model/profile";
-import {ProfileContext, ProfilesState} from "@/components/profile/ProfileProvider";
 
 export const ValidationContext = createContext<FormValidation>(null);
 

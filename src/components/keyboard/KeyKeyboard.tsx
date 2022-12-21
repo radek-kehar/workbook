@@ -1,5 +1,4 @@
 import {
-    Answer,
     CommandKey as CommandKeyType,
     KeyboardKey,
     KeyboardKeyStyle,

@@ -1,7 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconName} from '@fortawesome/fontawesome-common-types';
 import {CommandKey, Operator, SymbolKey} from "@/model/examples";
-import {classNames} from "@/lib/utils";
 
 export enum Icon {
     EQUALS,
