@@ -1,0 +1,202 @@
+import React, {useContext} from "react";
+import CheckBoxGroup from "@/components/form/CheckBoxGroup";
+import Button, {ButtonMode} from "@/components/form/Button";
+import {NumericRange as NumericRangeModel, OperationType, Unknown} from "@/model/generator";
+import {operationTypeInfos, unknownInfos} from "@/message/enums";
+import {useNavigate} from "react-router-dom";
+import CheckBox from "@/components/form/CheckBox";
+import NumericRange from "../form/NumericRange";
+import {ExerciseFormModel, ExerciseModel} from "@/model/exercise";
+import {InputField, InputModel} from "@/model/form";
+import {Validate} from "@/model/validation";
+import {useImmer} from "use-immer";
+import {defaultExerciseOptions, valueOfExerciseOptions} from "@/model/factory/exercise";
+import {ValidationDispatchContext, ValidationProvider} from "@/components/form/validation/ValidationProvider";
+import {ProfileContext, ProfileDispatchContext} from "@/components/profile/ProfileProvider";
+import PageHeader from "@/components/basic/PageHeader";
+import ToolbarContainers from "../containers/ToolbarContainers";
+import FormSection from "@/components/basic/FormSection";
+import ConfirmationAlert, {AnswerType, useConfirmationDialog} from "@/components/modals/ConfirmationAlert";
+
+const allOperations: OperationType[] = Object.keys(OperationType).filter(item => isNaN(Number(item))).map(item => OperationType[item])
+
+const allUnknowns: Unknown[] = Object.keys(Unknown).filter(item => isNaN(Number(item))).map(item => Unknown[item])
+
+const createModel = (state?: ExerciseModel): ExerciseFormModel => {
+    const operations: InputModel<OperationType, boolean>[] = allOperations.map(operation => ({
+        name: operation,
+        value: state.operations.includes(operation)
+    }))
+
+    const range: InputModel<string, NumericRangeModel> = {
+        name: 'range',
+        value: {minDigit: state.range.minDigit, maxDigit: state.range.maxDigit, onlyTens: state.range.onlyTens}
+    }
+
+    const overbase: InputModel<string, boolean> = {
+        name: 'overbase',
+        value: state.overbase
+    }
+
+    const unknowns: InputModel<Unknown, boolean>[] = allUnknowns.map(unknown => ({
+        name: unknown,
+        value: state.unknowns.includes(unknown)
+    }))
+
+    return {
+        operations,
+        range,
+        overbase,
+        unknowns
+    }
+}
+
+const validates: Validate<ExerciseModel>[] = [
+    (value: ExerciseModel) => {
+        if (value.operations.length === 0) {
+            return {key: 'operations', error: 'Vyberte alespoň jednu operaci.'};
+        }
+        return true;
+    },
+    (value: ExerciseModel) => {
+        if (value.unknowns.length === 0) {
+            return {key: 'unknowns', error: 'Vyberte alespoň jednu neznámou.'};
+        }
+        return true;
+    },
+    (value: ExerciseModel) => {
+        if (value.range.minDigit === value.range.maxDigit) {
+            return {key: 'range', error: 'Minimální a maximální hodnota nemůže být stejná.'};
+        }
+        if (value.range.minDigit > value.range.maxDigit) {
+            return {key: 'range', error: 'Minimální hodnota nemůže být větší než maximální hodnota.'};
+        }
+        return true;
+    },
+    (value: ExerciseModel) => {
+        if (value.range.onlyTens && value.range.maxDigit - value.range.minDigit <= 10) {
+            return {key: 'onlyTens', error: 'Rozsah čísel je příliš malý. Nelze vytvořit příklady pouze s desítkama.'};
+        }
+        return true;
+    }
+]
+
+const Form = () => {
+    const navigate = useNavigate();
+
+    const {isOpen, open, close} = useConfirmationDialog();
+
+    const {exercise} = useContext(ProfileContext);
+    const {dispatchExercise} = useContext(ProfileDispatchContext);
+
+    const validate = useContext(ValidationDispatchContext);
+
+    const [model, setModel] = useImmer(createModel(exercise));
+
+    const changeValue = <V extends any>(key: string, value: InputModel<any, V>) => {
+        setModel((draft: ExerciseFormModel) => {
+            if (Array.isArray(draft[key])) {
+                const field = draft[key] as InputField<any, any, V>[]
+                field.forEach(item => {
+                    if (item.name === value.name) {
+                        item.value = value.value
+                    }
+                });
+            } else {
+                const field = draft[key] as InputField<any, any, V>
+                field.value = value.value
+            }
+        });
+    }
+
+    const handleReset = () => {
+        open();
+    }
+
+    const handleOnAnswer = (answer: AnswerType) => {
+        close();
+        if (answer === AnswerType.YES) {
+            setModel(createModel(defaultExerciseOptions()));
+        }
+    }
+
+    const handleStart = () => {
+        const exerciseOptions = valueOfExerciseOptions(model);
+        const formValidation = validate(exerciseOptions);
+        if (formValidation.isValid()) {
+            dispatchExercise.set(exerciseOptions);
+            navigate("/example");
+        }
+    }
+
+    return (
+        <form className="flex flex-col">
+            <FormSection title="Volba operací" description="Jaké operace chcete procvičovat?">
+                <CheckBoxGroup labels={operationTypeInfos}
+                               name='operations'
+                               value={model.operations}
+                               onChange={changeValue}/>
+            </FormSection>
+
+            <FormSection title="Volba čísel" description="S jakými čísly chcete procvičovat?">
+                <NumericRange name={model.range.name}
+                              value={model.range.value}
+                              onChange={(value) => changeValue(model.range.name, value)}/>
+
+                <div className="mt-4">
+                    <CheckBox label='Nepočítat přes 10'
+                              description="Vynechat příklady, ve kterých je nutné počítat přes základ 10. Tzn. vynechat příklady typu: 7 + 8 = 15"
+                              name={model.overbase.name}
+                              value={!model.overbase.value}
+                              onChange={(value) => {
+                                  const temp = {...value, value: !value.value};
+                                  if (!temp.value) {
+                                      changeValue(model.range.name, {...model.range, value: {...model.range.value, onlyTens: false}})
+                                  }
+                                  changeValue(model.overbase.name, temp);
+                              }}/>
+                </div>
+
+                <div className="mt-4">
+                    <CheckBox label='Pouze s desítkama'
+                              description="Pouze příklady s desítkama. Tzn. pouze příklady typu: 50 + 30 = 80"
+                              name="onlyTens"
+                              value={model.range.value.onlyTens}
+                              onChange={(value) => {
+                                  if (value.value) {
+                                      changeValue(model.overbase.name, {name: model.overbase.name, value: true})
+                                  }
+                                  changeValue(model.range.name, {...model.range, value: {...model.range.value, onlyTens: value.value}});
+                              }
+                    }/>
+                </div>
+            </FormSection>
+
+            <FormSection title="Volba neznámých" description="Doplňování jakých neznámých chcete provcvičovat?">
+                <CheckBoxGroup labels={unknownInfos}
+                               name={'unknowns'}
+                               value={model.unknowns}
+                               onChange={changeValue}/>
+            </FormSection>
+
+            <ToolbarContainers className="mt-4">
+                <Button mode={ButtonMode.THEMATHIC} type='button' text='Spusť' click={handleStart}/>
+                <Button mode={ButtonMode.SECONDARY} type='button' text='Reset' click={handleReset}/>
+                <ConfirmationAlert descripton="Opravdu chcete vzmazat předvolby cvičení?" title='Smazat cvičení' isOpen={isOpen} onAnswer={handleOnAnswer}/>
+            </ToolbarContainers>
+        </form>
+    )
+}
+
+const ExerciseForm = () => {
+    return (
+        <>
+            <PageHeader title="Vytvoření cvičení" description="Vytvořte si vlastní cvičení k procvičování."/>
+            <ValidationProvider validates={validates}>
+                <Form/>
+            </ValidationProvider>
+        </>
+    )
+}
+
+export default ExerciseForm;
