@@ -6,7 +6,8 @@ const emptyExerciseOptions = (): ExerciseModel => {
         operations: [],
         range: {
             minDigit: 0,
-            maxDigit: 0
+            maxDigit: 0,
+            onlyTens: false
         },
         overbase: true,
         unknowns: []
@@ -27,7 +28,8 @@ export const valueOfExerciseOptions = (value: ExerciseFormModel): ExerciseModel 
         operations: value.operations.filter(item => item.value).map(item => item.name),
         range: {
             minDigit: value.range.value.minDigit,
-            maxDigit: value.range.value.maxDigit
+            maxDigit: value.range.value.maxDigit,
+            onlyTens: value.range.value.onlyTens
         },
         overbase: value.overbase.value,
         unknowns: value.unknowns.filter(item => item.value).map(item => item.name)

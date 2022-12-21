@@ -14,7 +14,8 @@ export enum OperationType {
 
 export interface NumericRange {
     minDigit: number,
-    maxDigit: number
+    maxDigit: number,
+    onlyTens: boolean
 }
 
 export enum Unknown {

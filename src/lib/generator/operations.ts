@@ -25,11 +25,21 @@ const generator = <T extends BinaryOperation | ComparisonOperation> (factory: ()
     };
 }
 
-const comparisonOperationFactory = ({minDigit, maxDigit}: NumericRange): () => ComparisonOperation[] => {
+const incFceFactory = (onlyTens: boolean) => onlyTens ? (val) => val + 10 : (val) => val + 1;
+
+const decFceFactory = (onlyTens: boolean) => onlyTens ? (val) => val - 10 : (val) => val - 1;
+
+const minDigitFceFactory = (onlyTens: boolean, value: number) => onlyTens ? Math.ceil(value / 10) * 10 : value;
+
+const maxDigitFceFactory = (onlyTens: boolean, value: number) => onlyTens ? Math.floor(value / 10) * 10 : value;
+
+const comparisonOperationFactory = ({minDigit, maxDigit, onlyTens}: NumericRange): () => ComparisonOperation[] => {
     const valuesFactory = (): ComparisonOperation[] => {
         const result: ComparisonOperation[] = [];
-        for (let i = minDigit; i <= maxDigit; i++) {
-            for (let j = minDigit; j <= maxDigit; j++) {
+        const incFce = incFceFactory(onlyTens);
+        const tempMinDigit = minDigitFceFactory(onlyTens, minDigit);
+        for (let i = tempMinDigit; i <= maxDigit; i = incFce(i)) {
+            for (let j = tempMinDigit; j <= maxDigit; j = incFce(j)) {
                 const temp = i - j;
                 result.push({
                     operator: temp > 0 ? Operator.GREATER_THAN : (temp < 0 ? Operator.LESS_THAN : Operator.EQUALS),
@@ -66,12 +76,14 @@ class OperationFactory {
 /**
  * Vygeneruje vsechny varianty prikladu na scitani od minDigit do maxDigit.
  */
-const binaryOperationAddFactory = ({minDigit, maxDigit}: NumericRange): () => BinaryOperation[] => {
+const binaryOperationAddFactory = ({minDigit, maxDigit, onlyTens}: NumericRange): () => BinaryOperation[] => {
     const valuesFactory = (): BinaryOperation[] => {
         const result: BinaryOperation[] = [];
-        let offset = 0;
-        for (let i = minDigit; i <= maxDigit; i++) {
-            for (let j = offset; j <= maxDigit; j++) {
+        const incFce = incFceFactory(onlyTens);
+        const tempMinDigit = minDigitFceFactory(onlyTens, minDigit);
+        let offset = tempMinDigit;
+        for (let i = tempMinDigit; i <= maxDigit; i = incFce(i)) {
+            for (let j = offset; j <= maxDigit; j = incFce(j)) {
                 if ((i + j) <= maxDigit) {
                     result.push(OperationFactory.ADD.create(i, j));
                     if (i !== j) {
@@ -81,7 +93,7 @@ const binaryOperationAddFactory = ({minDigit, maxDigit}: NumericRange): () => Bi
                     break;
                 }
             }
-            offset++;
+            offset = incFce(offset);
         }
         return result;
     }
@@ -91,12 +103,16 @@ const binaryOperationAddFactory = ({minDigit, maxDigit}: NumericRange): () => Bi
 /**
  * Vygeneruje vsechny varianty prikladu na odecitani od minDigit do maxDigit.
  */
-const binaryOperationSubFactory = ({minDigit, maxDigit}: NumericRange): () => BinaryOperation[] => {
+const binaryOperationSubFactory = ({minDigit, maxDigit, onlyTens}: NumericRange): () => BinaryOperation[] => {
     const valuesFactory = (): BinaryOperation[] => {
         const result: BinaryOperation[] = [];
-        for (let i = maxDigit; i >= minDigit; i--) {
-            for (let j = 0; j <= maxDigit; j++) {
-                if ((i - j) >= minDigit) {
+        const incFce = incFceFactory(onlyTens);
+        const decFce = decFceFactory(onlyTens);
+        const tempMaxDigit = maxDigitFceFactory(onlyTens, maxDigit);
+        const tempMinDigit = minDigitFceFactory(onlyTens, minDigit);
+        for (let i = tempMaxDigit; i >= tempMinDigit; i = decFce(i)) {
+            for (let j = tempMinDigit; j <= tempMaxDigit; j = incFce(j)) {
+                if ((i - j) >= tempMinDigit) {
                     result.push(OperationFactory.SUB.create(i, j));
                 } else {
                     break;

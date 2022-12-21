@@ -30,7 +30,7 @@ const createModel = (state?: ExerciseModel): ExerciseFormModel => {
 
     const range: InputModel<string, NumericRangeModel> = {
         name: 'range',
-        value: {minDigit: state.range.minDigit, maxDigit: state.range.maxDigit}
+        value: {minDigit: state.range.minDigit, maxDigit: state.range.maxDigit, onlyTens: state.range.onlyTens}
     }
 
     const overbase: InputModel<string, boolean> = {
@@ -70,6 +70,12 @@ const validates: Validate<ExerciseModel>[] = [
         }
         if (value.range.minDigit > value.range.maxDigit) {
             return {key: 'range', error: 'Minimální hodnota nemůže být větší než maximální hodnota.'};
+        }
+        return true;
+    },
+    (value: ExerciseModel) => {
+        if (value.range.onlyTens && value.range.maxDigit - value.range.minDigit <= 10) {
+            return {key: 'onlyTens', error: 'Rozsah čísel je příliš malý. Nelze vytvořit příklady pouze s desítkama.'};
         }
         return true;
     }
@@ -144,8 +150,25 @@ const Form = () => {
                               value={!model.overbase.value}
                               onChange={(value) => {
                                   const temp = {...value, value: !value.value};
+                                  if (!temp.value) {
+                                      changeValue(model.range.name, {...model.range, value: {...model.range.value, onlyTens: false}})
+                                  }
                                   changeValue(model.overbase.name, temp);
                               }}/>
+                </div>
+
+                <div className="mt-4">
+                    <CheckBox label='Pouze s desítkama'
+                              description="Pouze příklady s desítkama. Tzn. pouze příklady typu: 50 + 30 = 80"
+                              name="onlyTens"
+                              value={model.range.value.onlyTens}
+                              onChange={(value) => {
+                                  if (value.value) {
+                                      changeValue(model.overbase.name, {name: model.overbase.name, value: true})
+                                  }
+                                  changeValue(model.range.name, {...model.range, value: {...model.range.value, onlyTens: value.value}});
+                              }
+                    }/>
                 </div>
             </FormSection>
 

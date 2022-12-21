@@ -15,11 +15,11 @@ const decompose = (value: NumericRange): NumericRange[] => {
     let base
     do {
         base = ceilToBase(minDigit + 1)
-        result.push({minDigit: minDigit, maxDigit: base})
+        result.push({minDigit: minDigit, maxDigit: base, onlyTens: value.onlyTens})
         minDigit = base
     } while ((value.maxDigit - minDigit) > 10)
     if (base < value.maxDigit ) {
-        result.push({minDigit: base, maxDigit: value.maxDigit})
+        result.push({minDigit: base, maxDigit: value.maxDigit, onlyTens: value.onlyTens})
     }
     return result
 }
