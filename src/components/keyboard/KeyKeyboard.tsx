@@ -37,7 +37,7 @@ const CommonKey = <T extends number | SymbolKeyType | CommandKeyType>({value, cl
 
     return (
         <button type="button" disabled={value.disabled} onClick={handleOnClick}
-                className={classNames(className, "flex flex-row justify-center items-center overflow-hidden rounded-lg border border-gray-100 p-4")}>
+                className={classNames(className, "flex flex-row justify-center items-center p-4 overflow-hidden rounded-lg border border-gray-100 focus:outline-none focus:ring-2 focus:ring-theme-background focus:ring-offset-2")}>
             {children}
         </button>
     )
