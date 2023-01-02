@@ -16,6 +16,10 @@ import {useNavigate} from "react-router-dom";
 import {ProfileContext} from "@/components/profile/ProfileProvider";
 import ExampleLayout from "@/components/layouts/ExampleLayout";
 import {XMarkIcon} from "@heroicons/react/24/solid";
+import ConfirmationAlert, {AnswerType, useConfirmationDialog} from "@/components/modals/ConfirmationAlert";
+import OkModal, {useOkModal} from "@/components/modals/OkModal";
+import {defaultExerciseOptions} from "@/model/factory/exercise";
+import ExampleResult from "@/components/result/ExampleResult";
 
 function Example() {
     const navigate = useNavigate();
@@ -23,6 +27,8 @@ function Example() {
     const {generator, settings} = useContext(ProfileContext);
 
     const [state, dispatch] = useExamples(settings.count);
+
+    const {isOpen: isOpenFinishDialog, open: openFinishDialog, close: closeFinishDialog} = useOkModal();
 
     const timer = useRef(null);
 
@@ -37,7 +43,7 @@ function Example() {
             if (state.hasNext()) {
                 action = () => dispatch(nextExampleAction(generator.next()));
             } else {
-                action = () => navigate("/")
+                openFinishDialog();
             }
             timer.current = setTimeout(() => action(), 3000);
             return () => {
@@ -69,7 +75,12 @@ function Example() {
     }
 
     const handleOnClose = () => {
-        navigate("/")
+        navigate("/");
+    }
+
+    const handleOnFinish = () => {
+        closeFinishDialog();
+        navigate("/");
     }
 
     const handleOnGoToExample = (example: number) => {
@@ -89,6 +100,9 @@ function Example() {
             <div className="p-4 pt-2">
                 {chooseExampleComponent(example)}
             </div>
+            <OkModal title='Výsledek' isOpen={isOpenFinishDialog} onClose={handleOnFinish}>
+                <ExampleResult value={state.getResult()}/>
+            </OkModal>
         </ExampleLayout>
     );
 }

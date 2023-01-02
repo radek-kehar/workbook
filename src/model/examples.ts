@@ -5,14 +5,19 @@ export interface Examples {
     examples: Example<any>[]
 }
 
-export interface Example<T extends BinaryExample | ComparisonExample> {
+export interface TextProvider {
+    asText(): string
+}
+
+export interface Example<T extends BinaryExample | ComparisonExample> extends TextProvider {
     type: OperationType,
     operation: T,
     keyboard: Keyboard,
-    answer: Answer
+    answer: Answer,
+    wasWrongAnswer?: boolean
 }
 
-export interface BinaryExample {
+export interface BinaryExample extends TextProvider {
     discriminator: 'BinaryExample',
     operator: Value<Operator>,
     left: BinaryExample | Value<number>,
@@ -20,13 +25,13 @@ export interface BinaryExample {
     result: Value<number>
 }
 
-export interface ComparisonExample {
+export interface ComparisonExample extends TextProvider {
     operator: Value<Operator>,
     left: Value<number>,
     right: Value<number>
 }
 
-export interface Value<T extends number | Operator> {
+export interface Value<T extends number | Operator> extends TextProvider {
     discriminator: 'Value',
     value: T,
     isUnknown: boolean,
@@ -104,4 +109,9 @@ export enum Answer {
     NOT_ANSWERED = 'NOT_ANSWERED',
     CORRECT = 'CORRECT',
     WRONG = 'WRONG',
+}
+
+export interface ResultExamples {
+    correct: Example<any>[],
+    wrong: Example<any>[]
 }

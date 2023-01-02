@@ -1,4 +1,12 @@
-import {Answer, CommandKey, Example, Examples, KeyboardKey, SymbolKey} from "@/model/examples";
+import {
+    Answer,
+    CommandKey,
+    Example,
+    Examples,
+    KeyboardKey,
+    ResultExamples,
+    SymbolKey
+} from "@/model/examples";
 import {createContext, Dispatch} from "react";
 import {Reducer, useImmerReducer} from "use-immer";
 import {execute} from "@/state/action/key-press-action";
@@ -19,7 +27,8 @@ export interface ExamplesGetter {
     getExample(): Example<any>,
     getOrder(): number,
     getCount(): number,
-    getAnswers(): Answer[]
+    getAnswers(): Answer[],
+    getResult(): ResultExamples
 }
 
 const createGetter = (state: Examples): ExamplesGetter => {
@@ -38,6 +47,14 @@ const createGetter = (state: Examples): ExamplesGetter => {
         },
         getAnswers() {
             return state.examples.map(item => item?.answer ?? Answer.NOT_ANSWERED)
+        },
+        getResult(): ResultExamples | undefined {
+            if (state.examples.filter(item => item === null || item.answer === Answer.NOT_ANSWERED).length > 0) {
+                return undefined;
+            }
+            let correct = state.examples.filter(item => !item.wasWrongAnswer);
+            let wrong = state.examples.filter(item => item.wasWrongAnswer);
+            return { correct, wrong }
         }
     }
 }

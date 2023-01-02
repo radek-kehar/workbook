@@ -202,12 +202,14 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
         unknownServant.set(pressedKey.value);
         example.answer = unknownServant.evaulate();
         if (example.answer === Answer.CORRECT) {
+            example.wasWrongAnswer = example.wasWrongAnswer ? true : false;
             unknownServant.show(ShowValue.ENTERED);
             disableKeyboard(example.keyboard);
             clearStyleKey(example.keyboard); // todo: clearStyleKey sjednotit s setStyleKey
             setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.POSITIVE);
 
         } else if (example.answer === Answer.WRONG) {
+            example.wasWrongAnswer = true;
             unknownServant.show(ShowValue.NONE);
             disableKey(example.keyboard, pressedKey);
             setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.NEGATIVE);
@@ -233,9 +235,11 @@ export const execute = (example: Example<any>, pressedKey: KeyboardKey<any>) => 
                 example.answer = unknownServant.evaulate();
                 unknownServant.show(ShowValue.ENTERED);
                 if (example.answer === Answer.CORRECT) {
+                    example.wasWrongAnswer = example.wasWrongAnswer ? true : false;
                     disableKeyboard(example.keyboard);
                     setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.POSITIVE);
                 } else if (example.answer === Answer.WRONG) {
+                    example.wasWrongAnswer = true;
                     setStyleKey(example.keyboard, pressedKey, KeyboardKeyStyle.NEGATIVE);
                 }
             }
