@@ -2,10 +2,10 @@
   "name": "workbook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://radek-kehar.github.io/cvicebnice/",
+  "homepage": "https://radek-kehar.github.io/workbook/",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --base=/cvicebnice/",
+    "build": "tsc && vite build --base=/workbook/",
     "serve": "vite preview"
   },
   "dependencies": {

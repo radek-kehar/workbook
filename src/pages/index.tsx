@@ -4,7 +4,7 @@ import Routes from "@/routes/Routes";
 
 const Pages = () => {
     return (
-        <BrowserRouter basename="cvicebnice">
+        <BrowserRouter basename="workbook">
             <Routes/>
         </BrowserRouter>
     );
