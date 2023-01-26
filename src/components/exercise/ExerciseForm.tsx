@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import CheckBoxGroup from "@/components/form/CheckBoxGroup";
 import Button, {ButtonMode} from "@/components/form/Button";
 import {NumericRange as NumericRangeModel, OperationType, Unknown} from "@/model/generator";
-import {operationTypeInfos, unknownInfos} from "@/message/enums";
+import {operationTypeInfos, TypeInfo, unknownInfos} from "@/message/enums";
 import {useNavigate} from "react-router-dom";
 import CheckBox from "@/components/form/CheckBox";
 import NumericRange from "../form/NumericRange";
@@ -65,6 +65,12 @@ const validates: Validate<ExerciseModel>[] = [
         return true;
     },
     (value: ExerciseModel) => {
+        if (isNaN(value.range.minDigit) || Number.isNaN(Number.parseInt(value.range.minDigit.toString()))) {
+            return {key: 'minDigit', error: 'Minimální hodnota je povinná.'};
+        }
+        if (isNaN(value.range.maxDigit) || Number.isNaN(Number.parseInt(value.range.maxDigit.toString()))) {
+            return {key: 'maxDigit', error: 'Maximální hodnota je povinná.'};
+        }
         if (value.range.minDigit === value.range.maxDigit) {
             return {key: 'range', error: 'Minimální a maximální hodnota nemůže být stejná.'};
         }
@@ -81,6 +87,20 @@ const validates: Validate<ExerciseModel>[] = [
     }
 ]
 
+const changeDraft = <V extends any>(draft: ExerciseFormModel, key: string, value: InputModel<any, V>) => {
+    if (Array.isArray(draft[key])) {
+        const field = draft[key] as InputField<any, any, V>[]
+        field.forEach(item => {
+            if (item.name === value.name) {
+                item.value = value.value
+            }
+        });
+    } else {
+        const field = draft[key] as InputField<any, any, V>
+        field.value = value.value
+    }
+}
+
 const Form = () => {
     const navigate = useNavigate();
 
@@ -93,19 +113,17 @@ const Form = () => {
 
     const [model, setModel] = useImmer(createModel(exercise));
 
+    const changeValues = (values: {key: string, value: InputModel<any, any>}[]) => {
+        setModel((draft: ExerciseFormModel) => {
+            values.forEach(item => {
+                changeDraft(draft, item.key, item.value);
+            })
+        });
+    }
+
     const changeValue = <V extends any>(key: string, value: InputModel<any, V>) => {
         setModel((draft: ExerciseFormModel) => {
-            if (Array.isArray(draft[key])) {
-                const field = draft[key] as InputField<any, any, V>[]
-                field.forEach(item => {
-                    if (item.name === value.name) {
-                        item.value = value.value
-                    }
-                });
-            } else {
-                const field = draft[key] as InputField<any, any, V>
-                field.value = value.value
-            }
+            changeDraft(draft, key, value);
         });
     }
 
@@ -149,11 +167,10 @@ const Form = () => {
                               name={model.overbase.name}
                               value={!model.overbase.value}
                               onChange={(value) => {
-                                  const temp = {...value, value: !value.value};
-                                  if (!temp.value) {
-                                      changeValue(model.range.name, {...model.range, value: {...model.range.value, onlyTens: false}})
-                                  }
-                                  changeValue(model.overbase.name, temp);
+                                  changeValues([
+                                      {key: model.overbase.name, value: {...value, value: !value.value}},
+                                      {key: model.range.name, value: {...model.range, value: {...model.range.value, onlyTens: false}}}
+                                  ]);
                               }}/>
                 </div>
 
@@ -163,10 +180,10 @@ const Form = () => {
                               name="onlyTens"
                               value={model.range.value.onlyTens}
                               onChange={(value) => {
-                                  if (value.value) {
-                                      changeValue(model.overbase.name, {name: model.overbase.name, value: true})
-                                  }
-                                  changeValue(model.range.name, {...model.range, value: {...model.range.value, onlyTens: value.value}});
+                                  changeValues([
+                                      {key: model.overbase.name, value: {name: model.overbase.name, value: true}},
+                                      {key: model.range.name, value: {...model.range, value: {...model.range.value, onlyTens: value.value}}}
+                                  ]);
                               }
                     }/>
                 </div>

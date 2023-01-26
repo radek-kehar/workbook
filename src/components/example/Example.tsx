@@ -42,12 +42,13 @@ function Example() {
             let action
             if (state.hasNext()) {
                 action = () => dispatch(nextExampleAction(generator.next()));
+                timer.current = setTimeout(() => action(), 3000);
+                return () => {
+                    clearTimeout(timer.current);
+                }
+
             } else {
                 openFinishDialog();
-            }
-            timer.current = setTimeout(() => action(), 3000);
-            return () => {
-                clearTimeout(timer.current);
             }
         }
     }, [state])

@@ -29,7 +29,7 @@ const OkModal = ({children, isOpen, title, onClose}: OkModalProps) => {
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={onClose}>
+            <Dialog as="div" className="relative z-10 top-0 left-0 right-0" initialFocus={cancelButtonRef} onClose={onClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

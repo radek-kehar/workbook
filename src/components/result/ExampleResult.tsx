@@ -33,9 +33,9 @@ const WrongResult = ({value}: { value: Example<any>[] }) => {
     return (
         <div className="flex flex-col gap-y-2 text-lg">
             <div className="text-gray-500">Zopakuj si příklady, ve kterých jsi chyboval:</div>
-            {value.map(item => {
+            {value.map((item, idx) => {
                 return (
-                    <div>{item.asText()}</div>
+                    <div key={idx}>{item.asText()}</div>
                 );
             })}
         </div>

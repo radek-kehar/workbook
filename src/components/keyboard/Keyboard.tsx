@@ -149,7 +149,7 @@ const CommandKeyboard = ({keys, click}: SpecificKeyboardProps<CommandKeyType>) =
     // console.log('RENDERER: CommandKeyboard')
 
     return (
-        <div className="flex flex-col justify-center items-center gap-y-2">
+        <div className="flex flex-row sm:flex-col justify-center items-center gap-x-2 sm:gap-y-2">
             <div className="width-0 grow shrink basis-auto">
                 {commandKeyFactory(keys, click, CommandKeyType.BACKSPACE)}
             </div>
@@ -169,7 +169,7 @@ export default function Keyboard({value, click}: KeyboardProps) {
     // console.log('RENDERER: Keyboard')
 
     return (
-        <div className="flex flex-row justify-center items-center gap-x-2">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-y-4 sm:gap-x-2">
             {value.keys.numeric.length > 0 ? <NumericKeyboard keys={value.keys.numeric} click={click}/> : null}
             {value.keys.symbol.length > 0 ? <SymbolKeyboard keys={value.keys.symbol} click={click}/> : null}
             {value.keys.command.length > 0 ? <CommandKeyboard keys={value.keys.command} click={click}/> : null}

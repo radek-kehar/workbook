@@ -12,13 +12,13 @@ const ComparisonExample = ({example, keyPressed}: ComparisonExampleProps) => {
 
     return (
         <div className="flex flex-row justify-center items-center text-center content-center">
-            <div className="grow text-8xl">
+            <div className="grow text-6xl sm:text-8xl">
                 <OperandLabel value={operation.left}/>
             </div>
-            <div className="grow text-6xl">
+            <div className="grow text-4xl sm:text-6xl">
                 <Keyboard value={example.keyboard} click={keyPressed}/>
             </div>
-            <div className="grow text-8xl">
+            <div className="grow text-6xl sm:text-8xl">
                 <OperandLabel value={operation.right}/>
             </div>
         </div>

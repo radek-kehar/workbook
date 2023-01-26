@@ -14,7 +14,7 @@ const NumericRange = ({name, value, onChange}: NumericRangeProps) => {
     const validation = useContext(ValidationContext);
 
     const handleChange = (event) => {
-        const newRange = {...value, [event.name]: Number(event.value)}
+        const newRange = {...value, [event.name]: event.value}
         onChange({
             name,
             value: newRange
@@ -24,14 +24,14 @@ const NumericRange = ({name, value, onChange}: NumericRangeProps) => {
     return (
         <>
             <InputNumber label='Od'
-                         max={value.maxDigit}
                          name='minDigit'
                          value={value.minDigit}
+                         required
                          onChange={handleChange}/>
             <InputNumber label='Do'
-                         min={value.minDigit}
                          name='maxDigit'
                          value={value.maxDigit}
+                         required
                          onChange={handleChange}/>
             <ValidationError value={validation.getError(name)}/>
         </>

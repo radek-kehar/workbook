@@ -28,7 +28,7 @@ const Button = ({ mode, text, type = 'button', click }: ButtonProps) => {
     }
 
     return (
-        <button type={type} onClick={click} className={classNames(className, "inline-flex items-center rounded border border-gray-300 px-2.5 py-1.5 text-xs font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2")}>
+        <button type={type} onClick={click} className={classNames(className, "inline-flex items-center rounded border border-gray-300 px-2.5 py-1.5 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-theme-background focus:ring-offset-2")}>
             {text}
         </button>
     );
