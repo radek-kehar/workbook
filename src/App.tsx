@@ -4,6 +4,7 @@ import {ProfileProvider} from "./components/profile/ProfileProvider";
 import {ThemeProvider} from "@/components/themes/ThemeProvider";
 
 function App() {
+
     return (
         <div>
             <ThemeProvider>
