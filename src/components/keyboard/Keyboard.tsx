@@ -160,7 +160,7 @@ const CommandKeyboard = ({keys, click}: SpecificKeyboardProps<CommandKeyType>) =
     )
 }
 
-type KeyboardProps = {
+export type KeyboardProps = {
     value: KeyboardModel,
     click: (value: KeyboardKey<any>) => void
 }

@@ -15,13 +15,13 @@ const AllCorectResult = () => {
 const CorectResult = ({value}: { value: Example<any>[] }) => {
     let messageCorrect
     if (value.length === 0) {
-        messageCorrect = 'Na poprvé si neodpověděl na žádný příklad správně.';
+        messageCorrect = 'Na poprvé jsi neodpověděl na žádný příklad správně.';
     } else if (value.length === 1) {
-        messageCorrect = 'Na poprvé si odpověděl na 1 příklad správně.';
+        messageCorrect = 'Na poprvé jsi odpověděl na 1 příklad správně.';
     } else if (value.length < 5) {
-        messageCorrect = `Na poprvé si odpověděl na ${value.length} příklady správně.`;
+        messageCorrect = `Na poprvé jsi odpověděl na ${value.length} příklady správně.`;
     } else {
-        messageCorrect = `Na poprvé si odpověděl na ${value.length} příkladů správně.`;
+        messageCorrect = `Na poprvé jsi odpověděl na ${value.length} příkladů správně.`;
     }
 
     return (

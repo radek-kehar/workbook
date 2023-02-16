@@ -19,7 +19,7 @@ const InputNumber = ({autoFocus, disabled, label, name, min, max, required, valu
     const handleChange = (event) => {
         onChange({
             name: name, // event.target.name
-            value: event.target.value.replace(/\D/, '')
+            value: Number(event.target.value.replace(/\D/, ''))
         })
     }
 

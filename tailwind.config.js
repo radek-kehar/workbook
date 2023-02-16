@@ -11,6 +11,9 @@ module.exports = {
         'theme-text': 'var(--color-text-theme)',
         'theme-background': 'var(--color-bg-theme)',
       },
+      gridTemplateRows: {
+        '11': 'repeat(11, minmax(0, 1fr))'
+      }
     },
     backgroundColor: (theme) => ({
       ...theme('colors'),

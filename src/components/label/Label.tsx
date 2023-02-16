@@ -17,7 +17,7 @@ const UnknownLabel = () => {
     )
 }
 
-type OperandLabelProps = {
+export type OperandLabelProps = {
     value: Value<number>
 }
 

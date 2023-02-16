@@ -8,7 +8,8 @@ import {
     faGreaterThan,
     faLessThan,
     faMinus,
-    faPlus
+    faPlus,
+    faAppleWhole
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -18,5 +19,6 @@ library.add(
     faGreaterThan,
     faLessThan,
     faCheck,
-    faDeleteLeft
+    faDeleteLeft,
+    faAppleWhole
 );
