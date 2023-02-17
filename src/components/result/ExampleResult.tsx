@@ -1,13 +1,13 @@
 import {Example, ResultExamples} from "@/model/examples";
-import {CheckIcon} from "@heroicons/react/24/outline";
+import {Icon, IconCircle, IconLabel} from "@/components/label/IconLabel";
 
 const AllCorectResult = () => {
     return (
         <div className="flex flex-col text-center mb-10">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+            <div className="mx-auto flex items-center justify-center">
+                <IconCircle className="text-5xl text-green-600" value={Icon.CHECK}/>
             </div>
-            <div className="text-3xl">Všechno správně!</div>
+            <div className="mt-4 text-3xl">Všechno správně!</div>
         </div>
     )
 }

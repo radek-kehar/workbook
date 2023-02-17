@@ -1,11 +1,11 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
-import svgrPlugin from 'vite-plugin-svgr';
 import * as path from 'path'
+import macrosPlugin from "vite-plugin-babel-macros";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), svgrPlugin()],
+    plugins: [react(), macrosPlugin()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src')

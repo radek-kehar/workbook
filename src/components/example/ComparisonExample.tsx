@@ -1,8 +1,8 @@
 import Keyboard, {KeyboardProps} from "@/components/keyboard/Keyboard";
 import {OperandLabel, OperandLabelProps} from "@/components/label/Label";
 import {ComparisonExample as ComparisonExampleModel, Example, KeyboardKey, SymbolKey} from "@/model/examples";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {ExampleHelp} from "@/components/example/ExampleHelp";
+import {Icon, IconLabel} from "@/components/label/IconLabel";
 
 type ComparisonExampleProps = {
     example: Example<ComparisonExampleModel>,
@@ -42,7 +42,7 @@ const OperandItemsContainer3Cols = ({value}: OperandLabelProps) => {
         <div className="basis-1/2 text-4xl sm:text-6xl ">
             <div className="grid grid-cols-3 gap-1 justify-center justify-items-center">
                 {[...Array(value.value)].map((e, i) =>
-                    <FontAwesomeIcon key={i} icon={['fas', 'apple-whole']}/>
+                    <IconLabel key={i} value={Icon.APPLE}/>
                 )}
             </div>
         </div>
@@ -68,7 +68,7 @@ const OperandItemsContainer10Rows = ({value}: OperandLabelProps) => {
                     return (
                         <>
                             {header}
-                            <FontAwesomeIcon key={i} icon={['fas', 'apple-whole']}/>
+                            <IconLabel key={i} value={Icon.APPLE}/>
                         </>
                     )
                 })}

@@ -1,8 +1,6 @@
-import React, {useContext} from "react";
+import React from "react";
 import {InputModel} from "@/model/form";
 import InputContainers, {defaultInputClassName} from "@/components/containers/InputContainers";
-import {ValidationContext} from "@/components/form/validation/ValidationProvider";
-import ValidationError from "@/components/form/validation/ValidationError";
 
 type InputNumberProps = {
     autoFocus?: boolean,

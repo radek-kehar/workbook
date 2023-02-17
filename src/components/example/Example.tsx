@@ -15,11 +15,9 @@ import ResultBar from "../bar/ResultBar";
 import {useNavigate} from "react-router-dom";
 import {ProfileContext} from "@/components/profile/ProfileProvider";
 import ExampleLayout from "@/components/layouts/ExampleLayout";
-import {XMarkIcon} from "@heroicons/react/24/solid";
-import ConfirmationAlert, {AnswerType, useConfirmationDialog} from "@/components/modals/ConfirmationAlert";
 import OkModal, {useOkModal} from "@/components/modals/OkModal";
-import {defaultExerciseOptions} from "@/model/factory/exercise";
 import ExampleResult from "@/components/result/ExampleResult";
+import {Icon, IconLabel} from "@/components/label/IconLabel";
 
 function Example() {
     const navigate = useNavigate();
@@ -96,7 +94,7 @@ function Example() {
 
     return (
         <ExampleLayout>
-            <XMarkIcon className="absolute top-0 right-0 z-10 h-6 w-6 bg-white cursor-pointer" aria-hidden="true" onClick={handleOnClose}/>
+            <IconLabel className="absolute top-0 right-0 z-10 h-6 w-6 bg-white cursor-pointer" value={Icon.XMARK} onClick={handleOnClose}/>
             {chooseBarComponent(settings.continueWithError)}
             <div className="p-4 pt-2">
                 {chooseExampleComponent(example)}

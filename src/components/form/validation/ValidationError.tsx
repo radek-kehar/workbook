@@ -1,5 +1,5 @@
 import React from "react";
-import {ExclamationTriangleIcon} from "@heroicons/react/24/outline";
+import {Icon, IconLabel} from "@/components/label/IconLabel";
 
 type ValidationErrorProps = {
     value: string | undefined
@@ -10,7 +10,7 @@ const ValidationError = ({value}: ValidationErrorProps) => {
 
     return (
         <p className="flex items-center gap-x-2 mt-2 text-sm text-negative font-semibold">
-            <ExclamationTriangleIcon className="h-5 w-5 text-negative"/>
+            <IconLabel className="h-5 w-5 text-negative" value={Icon.TRIANGLE_EXCLAMATION}/>
             {value}
         </p>
     )

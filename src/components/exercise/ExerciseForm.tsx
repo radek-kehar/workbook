@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import CheckBoxGroup from "@/components/form/CheckBoxGroup";
 import Button, {ButtonMode} from "@/components/form/Button";
 import {NumericRange as NumericRangeModel, OperationType, Unknown} from "@/model/generator";
-import {operationTypeInfos, TypeInfo, unknownInfos} from "@/message/enums";
+import {operationTypeInfos, unknownInfos} from "@/message/enums";
 import {useNavigate} from "react-router-dom";
 import CheckBox from "@/components/form/CheckBox";
 import NumericRange from "../form/NumericRange";

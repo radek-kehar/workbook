@@ -7,7 +7,6 @@ import {ValidationDispatchContext, ValidationProvider} from "@/components/form/v
 import InputNumber from "@/components/form/InputNumber";
 import {ProfileContext, ProfileDispatchContext} from "@/components/profile/ProfileProvider";
 import {SettingsModel} from "@/model/settings";
-import CheckBox from "@/components/form/CheckBox";
 import ToolbarContainers from "@/components/containers/ToolbarContainers";
 import PageHeader from "@/components/basic/PageHeader";
 import FormSection from "@/components/basic/FormSection";

@@ -1,7 +1,5 @@
 import React, {Fragment, ReactNode, useRef, useState} from "react";
 import {Dialog, Transition} from '@headlessui/react'
-import {ExclamationTriangleIcon} from '@heroicons/react/24/outline'
-import {AnswerType} from "@/components/modals/ConfirmationAlert";
 
 export const useOkModal = () => {
     const [open, setOpen] = useState(false);

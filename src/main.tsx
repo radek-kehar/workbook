@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './main.css';
-import './fontawesome';
 import App from "./App";
 
 ReactDOM.render(

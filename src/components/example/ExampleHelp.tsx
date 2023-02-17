@@ -1,6 +1,5 @@
-import Button, {ButtonMode} from "@/components/form/Button";
 import React, {useState} from "react";
-import {ArrowUturnLeftIcon, LightBulbIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {Icon, IconCircle} from "@/components/label/IconLabel";
 
 type ButtonProps = {
     click: () => void
@@ -25,10 +24,10 @@ export const ExampleHelp = ({example, help}: ExampleHelpProps) => {
     return (
         <>
             {isShowHelp ? help : example}
-            <div className="absolute bottom-5 right-5 z-10 h-10 w-10 cursor-pointer text-theme-text bg-theme-background rounded-full p-1 hover:ring-2 hover:ring-theme-background hover:ring-offset-2">
+            <div className="absolute bottom-5 right-5 z-10 cursor-pointer animate-pulse hover:animate-none">
                 {isShowHelp
-                    ? <ArrowUturnLeftIcon aria-hidden="true" onClick={closeHelp}/>
-                    : <LightBulbIcon aria-hidden="true" onClick={showHelp}/>
+                    ? <IconCircle className="text-theme-background" value={Icon.ROTATE_LEFT} onClick={closeHelp}/>
+                    : <IconCircle className="text-theme-background" value={Icon.LIGHTBULB} onClick={showHelp}/>
                 }
             </div>
         </>

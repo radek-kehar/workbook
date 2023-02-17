@@ -3,8 +3,8 @@ import SettingsNav from "@/components/nav/SettingsNav";
 import {Link} from "react-router-dom";
 import {ANNONYMOUS_PROFILE_NAME, ProfileContext, ProfilesState} from "@/components/profile/ProfileProvider";
 import {Popover} from "@headlessui/react";
-import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/solid";
 import Avatar, {AvatarSize} from "@/components/basic/Avatar";
+import {Icon, IconLabel} from "@/components/label/IconLabel";
 
 const Title = () => {
     return (
@@ -40,7 +40,7 @@ const Header = () => {
                     }
                     <Popover.Button>
                         <span className="sr-only">Otevřít menu</span>
-                        <Bars3Icon className="h-6 w-6 text-theme-text" aria-hidden="true"/>
+                        <IconLabel className="h-6 w-6 text-theme-text" value={Icon.BARS}/>
                     </Popover.Button>
                     <Popover.Panel className="absolute top-0 md:top-10 left-0 md:left-auto md:right-0 z-10 w-screen md:w-auto h-screen md:h-auto bg-white">
                         <div className="md:hidden">
@@ -48,7 +48,7 @@ const Header = () => {
                                 <Title/>
                                 <Popover.Button>
                                     <span className="sr-only">Zavřít menu</span>
-                                    <XMarkIcon className="h-6 w-6 text-theme-text" aria-hidden="true" />
+                                    <IconLabel className="h-6 w-6 text-theme-text" value={Icon.XMARK}/>
                                 </Popover.Button>
                             </TitleContainer>
                         </div>

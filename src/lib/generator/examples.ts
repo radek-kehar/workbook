@@ -1,6 +1,6 @@
 import {createGenerator as createOperationGenerator} from "@/lib/generator/operations";
 import {createGenerator as createGeneratorUnknown} from "@/lib/generator/unknown";
-import {TextProvider, Answer, Example} from "@/model/examples";
+import {Answer, Example} from "@/model/examples";
 import {ExampleGenerator, GeneratorOptions, Generators, GenericGenerator,} from "@/model/generator";
 import {createKeyboard} from "@/lib/generator/creator/keyboard";
 import {transformOperationToExample} from "@/lib/generator/mapper/operationToExample";
